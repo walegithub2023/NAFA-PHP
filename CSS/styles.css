@@ -1,0 +1,43 @@
+/* Home page main section styling starts */
+#homeHeader {
+  background-color: white;
+  color: #4154f1;
+  font-size: 150%;
+  text-align: center;
+  margin: 10px auto;
+  width: 80%;
+  font-weight: bold;
+}
+
+#homeParagraphText {
+  font-family: "Times New Roman", Times, serif;
+  font-size: 110%;
+  text-align: justify;
+  color: rgb(1, 41, 112);
+  margin: 10px auto;
+}
+/* Home page main section styling ends */
+
+/* 404 page main section styling starts */
+#text404 {
+  background-color: white;
+  color: #4154f1;
+  font-size: 700%;
+  text-align: center;
+  margin: 10px auto;
+  width: 80%;
+}
+
+#errorText {
+  font-family: "Times New Roman", Times, serif;
+  font-size: 150%;
+  text-align: center;
+  color: rgb(1, 41, 112);
+  margin: 10px auto;
+}
+
+#text404div {
+  margin-top: 120px;
+}
+
+/* 404 page main section styling ends */
