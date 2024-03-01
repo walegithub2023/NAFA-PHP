@@ -43,7 +43,7 @@ include 'adminSideNavBar.php';
                       <h5 class="modal-title">SIGNAL DOCUMENTS</h5>
                       <button type="button" style="border-radius:1px;" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body" style="padding-bottom:50px;">
                     <!--  signal document form starts --> 
                     <!-- Multi Columns Form -->
               <form method="post" action="process_signal" class="row g-3" style="padding-left:70px; padding-right:70px; padding-top:20px; padding-bottom:20px;">
@@ -148,10 +148,10 @@ include 'adminSideNavBar.php';
                       <h5 class="modal-title">OTHER DOCUMENTS</h5>
                       <button type="button" style="border-radius:1px;" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body" style="padding:50px;">
+                    <div class="modal-body" style="padding:70px; padding-top:20px;">
                      <!--  other documents form starts --> 
                     <!-- Multi Columns Form -->
-              <form method="post" action="process_others" class="row g-3" style="padding-left:70px; padding-right:70px; padding-top:20px; padding-bottom:20px;">
+              <form method="post" action="process_others" class="row g-3">
                    <div class="col-md-12">
                   <label for="documentType" class="form-label">TYPE:</label>
                   <select id="documentType" name="documentType" class="form-select" style="border-radius:2px;" required>
@@ -260,7 +260,7 @@ include 'adminSideNavBar.php';
                       <h5 class="modal-title">UNKNOWN DOCUMENTS</h5>
                       <button type="button" style="border-radius:1px;" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body" style="padding:55px;">
+                    <div class="modal-body" style="padding:70px; padding-top:20px;">
                     <!--  unknown documents form starts --> 
                     <!-- Multi Columns Form -->
               <form method="post" action="process_unknown" class="row g-3" style="">

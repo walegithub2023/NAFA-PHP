@@ -40,7 +40,7 @@ include 'adminSideNavBar.php';
           <div class="card" style="padding-left:50px; padding-right:50px; padding-top:50px;">
             <div class="card-body">
             
-              <!-- Table with stripped rows -->
+              <!-- Table with stripped rows starts -->
               <table class="table table-striped" style="text-transform:uppercase;"> 
                 <thead>
              
@@ -79,7 +79,9 @@ include 'adminSideNavBar.php';
                   </div>
                 </div>
 
-              
+    </tbody> 
+    </table> 
+        <!-- Table with stripped rows ends -->
             </div>
           </div>
 
