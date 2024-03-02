@@ -97,7 +97,7 @@ include 'adminSideNavBar.php';
                   <label for="controlNo" class="form-label">CONTROL:</label>
                   <input type="text" name="controlNo" class="form-control" id="controlNo" placeholder="control no" style="border-radius:2px;">
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-2">
                   <label for="dateArchived" class="form-label">DATE:</label>
                   <input type="date" name="dateArchived" class="form-control" id="dateArchived" placeholder="" style="border-radius:2px;">
                 </div>
@@ -113,11 +113,11 @@ include 'adminSideNavBar.php';
                         <option value="6">6 months ago</option>
                   </select>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-5">
                   <label for="subject" class="form-label">SUBJECT</label>
                   <input type="text" name="subject" class="form-control" id="subject" placeholder="Enter subject" style="border-radius:2px;">
                 </div>
-                <div class="col-md-5">
+                <div class="col-md-6">
                   <label for="body" class="form-label">BODY</label>
                   <input type="text" name="body" class="form-control" id="body" placeholder="Enter body" style="border-radius:2px;">
                 </div>
@@ -153,7 +153,9 @@ include 'adminSideNavBar.php';
                     <th scope="col">SUBJECT</th>
                     <th scope="col">DOCUMENT DATE</th>
                     <th scope="col">DATE ARCHIVED</th>
+                    <th scope="col">TIME</th>
                     <th scope="col">VIEW</th>
+                     <th scope="col">OPEN</th>
                     <th scope="col">EDIT</th>
                     <th scope="col">DELETE</th>
                   </tr>
@@ -224,7 +226,7 @@ include 'adminSideNavBar.php';
            //declare or prepare variables for log_event function
             $userSvcNo = $_SESSION['svcNo'];
             $action = "Retrieve";
-            $description = "$userSvcNo"." "."retrieved $totalRecords $documentType documents from the archive";
+            $description = "$userSvcNo"." "."retrieved $totalRecords $documentType document(s) from the archive";
             $account = $_SESSION['account'];
             //call the log_event function
           log_event($conn, $userSvcNo, $action, $description, $account);
@@ -253,7 +255,7 @@ include 'adminSideNavBar.php';
            //declare or prepare variables for log_event function
             $userSvcNo = $_SESSION['svcNo'];
             $action = "Retrieve";
-            $description = "$userSvcNo"." "."retrieved $totalRecords documents with preRef $preRef from the archive";
+            $description = "$userSvcNo"." "."retrieved $totalRecords document(s) with preRef $preRef from the archive";
             $account = $_SESSION['account'];
             //call the log_event function
           log_event($conn, $userSvcNo, $action, $description, $account);
@@ -281,7 +283,7 @@ include 'adminSideNavBar.php';
            //declare or prepare variables for log_event function
             $userSvcNo = $_SESSION['svcNo'];
             $action = "Retrieve";
-            $description = "$userSvcNo"." "."retrieved $totalRecords documents with RefNo $refNo from the archive";
+            $description = "$userSvcNo"." "."retrieved $totalRecords document(s) with RefNo $refNo from the archive";
             $account = $_SESSION['account'];
             //call the log_event function
           log_event($conn, $userSvcNo, $action, $description, $account);
@@ -310,7 +312,7 @@ include 'adminSideNavBar.php';
            //declare or prepare variables for log_event function
             $userSvcNo = $_SESSION['svcNo'];
             $action = "Retrieve";
-            $description = "$userSvcNo"." "."retrieved $totalRecords documents with postRef $postRef from the archive";
+            $description = "$userSvcNo"." "."retrieved $totalRecords document(s) with postRef $postRef from the archive";
             $account = $_SESSION['account'];
             //call the log_event function
           log_event($conn, $userSvcNo, $action, $description, $account);
@@ -323,6 +325,217 @@ include 'adminSideNavBar.php';
           </div>';
           }
           }else
+
+
+           //if the user is searching with ref field 
+          if($ref !="" && ($documentType == "" && $preRef == "" && $refNo =="" && $postRef == "" && $directorate == "" && 
+          $securityClass == "" && $documentDate == "" && $dateArchived == "" && $dtg == "" && $controlNo == "" && 
+          $subject == "" && $body == "" && $duration == ""))
+          {
+          $documentSQL = "SELECT * FROM documents WHERE REF = '$ref'";
+          $documentResult = mysqli_query($conn, $documentSQL);
+          $totalRecords = mysqli_num_rows($documentResult);
+          //check if records are retrieved
+          if($totalRecords > 0){
+          //log the event
+           //declare or prepare variables for log_event function
+            $userSvcNo = $_SESSION['svcNo'];
+            $action = "Retrieve";
+            $description = "$userSvcNo"." "."retrieved $totalRecords document(s) with ref $ref from the archive";
+            $account = $_SESSION['account'];
+            //call the log_event function
+          log_event($conn, $userSvcNo, $action, $description, $account);
+          //display the retrieved documents.
+          echo'<div class="alert alert-dismissible" style="background-color: rgb(7, 102, 219); color:white; font-size:100%; text-align:center;
+          font-family:Arial; margin-bottom:10px; z-index:5; border-radius:1px solid rgb(7, 102, 219); padding:9px; border-radius:2px;">
+          <a href="adminRetrieve" class="close" data-dismiss="alert" aria-label="close" style="color:white; font-size:120%; text-align:left;
+          font-family:Arial; text-decoration:none; padding:0px">&times;</a>
+          DOCUMENTS RETRIEVED SUCCESSFULLY...
+          </div>';
+          }
+          }else
+
+
+
+              //if the user is searching with document date field 
+          if($documentDate !="" && ($documentType == "" && $preRef == "" && $refNo =="" && $postRef == "" && $directorate == "" && 
+          $securityClass == "" && $ref == "" && $dateArchived == "" && $dtg == "" && $controlNo == "" && 
+          $subject == "" && $body == "" && $duration == ""))
+          {
+          $documentSQL = "SELECT * FROM documents WHERE DOCUMENT_DATE = '$documentDate'";
+          $documentResult = mysqli_query($conn, $documentSQL);
+          $totalRecords = mysqli_num_rows($documentResult);
+          //check if records are retrieved
+          if($totalRecords > 0){
+          //log the event
+           //declare or prepare variables for log_event function
+            $userSvcNo = $_SESSION['svcNo'];
+            $action = "Retrieve";
+            $description = "$userSvcNo"." "."retrieved $totalRecords document(s) with document date $documentDate from the archive";
+            $account = $_SESSION['account'];
+            //call the log_event function
+          log_event($conn, $userSvcNo, $action, $description, $account);
+          //display the retrieved documents.
+          echo'<div class="alert alert-dismissible" style="background-color: rgb(7, 102, 219); color:white; font-size:100%; text-align:center;
+          font-family:Arial; margin-bottom:10px; z-index:5; border-radius:1px solid rgb(7, 102, 219); padding:9px; border-radius:2px;">
+          <a href="adminRetrieve" class="close" data-dismiss="alert" aria-label="close" style="color:white; font-size:120%; text-align:left;
+          font-family:Arial; text-decoration:none; padding:0px">&times;</a>
+          DOCUMENTS RETRIEVED SUCCESSFULLY...
+          </div>';
+          }
+          }else
+
+
+
+          //if the user is searching with sy class field 
+          if($securityClass !="" && ($documentType == "" && $preRef == "" && $refNo =="" && $postRef == "" && $directorate == "" && 
+          $documentDate == "" && $ref == "" && $dateArchived == "" && $dtg == "" && $controlNo == "" && 
+          $subject == "" && $body == "" && $duration == ""))
+          {
+          $documentSQL = "SELECT * FROM documents WHERE SY_CLASS = '$securityClass'";
+          $documentResult = mysqli_query($conn, $documentSQL);
+          $totalRecords = mysqli_num_rows($documentResult);
+          //check if records are retrieved
+          if($totalRecords > 0){
+          //log the event
+           //declare or prepare variables for log_event function
+            $userSvcNo = $_SESSION['svcNo'];
+            $action = "Retrieve";
+            $description = "$userSvcNo"." "."retrieved $totalRecords document(s) with security classification->$securityClass from the archive";
+            $account = $_SESSION['account'];
+            //call the log_event function
+          log_event($conn, $userSvcNo, $action, $description, $account);
+          //display the retrieved documents.
+          echo'<div class="alert alert-dismissible" style="background-color: rgb(7, 102, 219); color:white; font-size:100%; text-align:center;
+          font-family:Arial; margin-bottom:10px; z-index:5; border-radius:1px solid rgb(7, 102, 219); padding:9px; border-radius:2px;">
+          <a href="adminRetrieve" class="close" data-dismiss="alert" aria-label="close" style="color:white; font-size:120%; text-align:left;
+          font-family:Arial; text-decoration:none; padding:0px">&times;</a>
+          DOCUMENTS RETRIEVED SUCCESSFULLY...
+          </div>';
+          }
+          }else
+
+
+
+                //if the user is searching with dtg field 
+          if($dtg !="" && ($documentType == "" && $preRef == "" && $refNo =="" && $postRef == "" && $directorate == "" && 
+          $documentDate == "" && $ref == "" && $dateArchived == "" && $securityClass == "" && $controlNo == "" && 
+          $subject == "" && $body == "" && $duration == ""))
+          {
+          $documentSQL = "SELECT * FROM documents WHERE DTG = '$dtg'";
+          $documentResult = mysqli_query($conn, $documentSQL);
+          $totalRecords = mysqli_num_rows($documentResult);
+          //check if records are retrieved
+          if($totalRecords > 0){
+          //log the event
+           //declare or prepare variables for log_event function
+            $userSvcNo = $_SESSION['svcNo'];
+            $action = "Retrieve";
+            $description = "$userSvcNo"." "."retrieved $totalRecords document(s) with DTG->$dtg from the archive";
+            $account = $_SESSION['account'];
+            //call the log_event function
+          log_event($conn, $userSvcNo, $action, $description, $account);
+          //display the retrieved documents.
+          echo'<div class="alert alert-dismissible" style="background-color: rgb(7, 102, 219); color:white; font-size:100%; text-align:center;
+          font-family:Arial; margin-bottom:10px; z-index:5; border-radius:1px solid rgb(7, 102, 219); padding:9px; border-radius:2px;">
+          <a href="adminRetrieve" class="close" data-dismiss="alert" aria-label="close" style="color:white; font-size:120%; text-align:left;
+          font-family:Arial; text-decoration:none; padding:0px">&times;</a>
+          DOCUMENTS RETRIEVED SUCCESSFULLY...
+          </div>';
+          }
+          }else
+
+
+          //if the user is searching with directorate field 
+          if($directorate !="" && ($documentType == "" && $preRef == "" && $refNo =="" && $postRef == "" && $dtg == "" && 
+          $documentDate == "" && $ref == "" && $dateArchived == "" && $securityClass == "" && $controlNo == "" && 
+          $subject == "" && $body == "" && $duration == ""))
+          {
+          $documentSQL = "SELECT * FROM documents WHERE DIRECTORATE_ID = '$directorate'";
+          $documentResult = mysqli_query($conn, $documentSQL);
+          $totalRecords = mysqli_num_rows($documentResult);
+          //check if records are retrieved
+          if($totalRecords > 0){
+          //log the event
+           //declare or prepare variables for log_event function
+            $userSvcNo = $_SESSION['svcNo'];
+            $action = "Retrieve";
+            $description = "$userSvcNo"." "."retrieved $totalRecords document(s) from $directorate in the archive";
+            $account = $_SESSION['account'];
+            //call the log_event function
+          log_event($conn, $userSvcNo, $action, $description, $account);
+          //display the retrieved documents.
+          echo'<div class="alert alert-dismissible" style="background-color: rgb(7, 102, 219); color:white; font-size:100%; text-align:center;
+          font-family:Arial; margin-bottom:10px; z-index:5; border-radius:1px solid rgb(7, 102, 219); padding:9px; border-radius:2px;">
+          <a href="adminRetrieve" class="close" data-dismiss="alert" aria-label="close" style="color:white; font-size:120%; text-align:left;
+          font-family:Arial; text-decoration:none; padding:0px">&times;</a>
+          DOCUMENTS RETRIEVED SUCCESSFULLY...
+          </div>';
+          }
+          }else
+
+
+
+            //if the user is searching with control no field 
+          if($controlNo !="" && ($documentType == "" && $preRef == "" && $refNo =="" && $postRef == "" && $dtg == "" && 
+          $documentDate == "" && $ref == "" && $dateArchived == "" && $securityClass == "" && $directorate == "" && 
+          $subject == "" && $body == "" && $duration == ""))
+          {
+          $documentSQL = "SELECT * FROM documents WHERE CONTROL_NO = '$controlNo'";
+          $documentResult = mysqli_query($conn, $documentSQL);
+          $totalRecords = mysqli_num_rows($documentResult);
+          //check if records are retrieved
+          if($totalRecords > 0){
+          //log the event
+           //declare or prepare variables for log_event function
+            $userSvcNo = $_SESSION['svcNo'];
+            $action = "Retrieve";
+            $description = "$userSvcNo"." "."retrieved $totalRecords document(s) with control no.->$controlNo in the archive";
+            $account = $_SESSION['account'];
+            //call the log_event function
+          log_event($conn, $userSvcNo, $action, $description, $account);
+          //display the retrieved documents.
+          echo'<div class="alert alert-dismissible" style="background-color: rgb(7, 102, 219); color:white; font-size:100%; text-align:center;
+          font-family:Arial; margin-bottom:10px; z-index:5; border-radius:1px solid rgb(7, 102, 219); padding:9px; border-radius:2px;">
+          <a href="adminRetrieve" class="close" data-dismiss="alert" aria-label="close" style="color:white; font-size:120%; text-align:left;
+          font-family:Arial; text-decoration:none; padding:0px">&times;</a>
+          DOCUMENTS RETRIEVED SUCCESSFULLY...
+          </div>';
+          }
+          }else
+
+
+
+          
+            //if the user is searching with the date archived field 
+          if($dateArchived !="" && ($documentType == "" && $preRef == "" && $refNo =="" && $postRef == "" && $dtg == "" && 
+          $documentDate == "" && $ref == "" && $controlNo == "" && $securityClass == "" && $directorate == "" && 
+          $subject == "" && $body == "" && $duration == ""))
+          {
+          $documentSQL = "SELECT * FROM documents WHERE DATE_ARCHIVED = '$dateArchived'";
+          $documentResult = mysqli_query($conn, $documentSQL);
+          $totalRecords = mysqli_num_rows($documentResult);
+          //check if records are retrieved
+          if($totalRecords > 0){
+          //log the event
+           //declare or prepare variables for log_event function
+            $userSvcNo = $_SESSION['svcNo'];
+            $action = "Retrieve";
+            $description = "$userSvcNo"." "."retrieved $totalRecords document(s) with the date archived as.->$dateArchived in the archive";
+            $account = $_SESSION['account'];
+            //call the log_event function
+          log_event($conn, $userSvcNo, $action, $description, $account);
+          //display the retrieved documents.
+          echo'<div class="alert alert-dismissible" style="background-color: rgb(7, 102, 219); color:white; font-size:100%; text-align:center;
+          font-family:Arial; margin-bottom:10px; z-index:5; border-radius:1px solid rgb(7, 102, 219); padding:9px; border-radius:2px;">
+          <a href="adminRetrieve" class="close" data-dismiss="alert" aria-label="close" style="color:white; font-size:120%; text-align:left;
+          font-family:Arial; text-decoration:none; padding:0px">&times;</a>
+          DOCUMENTS RETRIEVED SUCCESSFULLY...
+          </div>';
+          }
+          }else
+
+
 
           //if the user is searching with duration field 
           if($duration !="" && ($documentType == "" && $preRef == "" && $refNo == "" && $postRef == "" && $ref == "" && $directorate == "" && 
@@ -341,10 +554,69 @@ include 'adminSideNavBar.php';
            //declare or prepare variables for log_event function
             $userSvcNo = $_SESSION['svcNo'];
             $action = "Retrieve";
-            $description = "$userSvcNo"." "."retrieved $totalRecords documents from $duration month(s) ago.";
+            $description = "$userSvcNo"." "."retrieved $totalRecords document(s) from $duration month(s) ago.";
             $account = $_SESSION['account'];
             //call the log_event function
             log_event($conn, $userSvcNo, $action, $description, $account);
+          //display the retrieved documents.
+          echo'<div class="alert alert-dismissible" style="background-color: rgb(7, 102, 219); color:white; font-size:100%; text-align:center;
+          font-family:Arial; margin-bottom:10px; z-index:5; border-radius:1px solid rgb(7, 102, 219); padding:9px; border-radius:2px;">
+          <a href="adminRetrieve" class="close" data-dismiss="alert" aria-label="close" style="color:white; font-size:120%; text-align:left;
+          font-family:Arial; text-decoration:none; padding:0px">&times;</a>
+          DOCUMENTS RETRIEVED SUCCESSFULLY...
+          </div>';
+          }
+          }else
+
+
+
+          //if the user is searching with the subject field 
+          if($subject !="" && ($documentType == "" && $preRef == "" && $refNo =="" && $postRef == "" && $dtg == "" && 
+          $documentDate == "" && $ref == "" && $controlNo == "" && $securityClass == "" && $directorate == "" && 
+          $dateArchived == "" && $body == "" && $duration == ""))
+          {
+          $documentSQL = "SELECT * FROM documents WHERE SUBJECT = '$subject'";
+          $documentResult = mysqli_query($conn, $documentSQL);
+          $totalRecords = mysqli_num_rows($documentResult);
+          //check if records are retrieved
+          if($totalRecords > 0){
+          //log the event
+           //declare or prepare variables for log_event function
+            $userSvcNo = $_SESSION['svcNo'];
+            $action = "Retrieve";
+            $description = "$userSvcNo"." "."retrieved $totalRecords document(s) with the subject as.->$subject in the archive";
+            $account = $_SESSION['account'];
+            //call the log_event function
+          log_event($conn, $userSvcNo, $action, $description, $account);
+          //display the retrieved documents.
+          echo'<div class="alert alert-dismissible" style="background-color: rgb(7, 102, 219); color:white; font-size:100%; text-align:center;
+          font-family:Arial; margin-bottom:10px; z-index:5; border-radius:1px solid rgb(7, 102, 219); padding:9px; border-radius:2px;">
+          <a href="adminRetrieve" class="close" data-dismiss="alert" aria-label="close" style="color:white; font-size:120%; text-align:left;
+          font-family:Arial; text-decoration:none; padding:0px">&times;</a>
+          DOCUMENTS RETRIEVED SUCCESSFULLY...
+          </div>';
+          }
+          }else
+
+
+          //if the user is searching with the body field 
+          if($body !="" && ($documentType == "" && $preRef == "" && $refNo =="" && $postRef == "" && $dtg == "" && 
+          $documentDate == "" && $ref == "" && $controlNo == "" && $securityClass == "" && $directorate == "" && 
+          $dateArchived == "" && $subject == "" && $duration == ""))
+          {
+          $documentSQL = "SELECT * FROM documents WHERE BODY = '$body'";
+          $documentResult = mysqli_query($conn, $documentSQL);
+          $totalRecords = mysqli_num_rows($documentResult);
+          //check if records are retrieved
+          if($totalRecords > 0){
+          //log the event
+           //declare or prepare variables for log_event function
+            $userSvcNo = $_SESSION['svcNo'];
+            $action = "Retrieve";
+            $description = "$userSvcNo"." "."retrieved $totalRecords document(s) with the body as.->$body in the archive";
+            $account = $_SESSION['account'];
+            //call the log_event function
+          log_event($conn, $userSvcNo, $action, $description, $account);
           //display the retrieved documents.
           echo'<div class="alert alert-dismissible" style="background-color: rgb(7, 102, 219); color:white; font-size:100%; text-align:center;
           font-family:Arial; margin-bottom:10px; z-index:5; border-radius:1px solid rgb(7, 102, 219); padding:9px; border-radius:2px;">
@@ -396,20 +668,22 @@ include 'adminSideNavBar.php';
             <td>".$documentFetch['SUBJECT']."</td>
             <td>".$documentFetch['DOCUMENT_DATE']."</td>
             <td>".$documentFetch['DATE_ARCHIVED']."</td>
+             <td>".$documentFetch['TIME']."</td>
             <td><a style='color:black' href='adminViewDocument?documentId=".$documentFetch['DOCUMENT_ID']."' type='submit' id='viewButton'><i class='bi bi-eye' id='viewButton'></i></a></td>
-            <td><a style='color:black' href='adminEditDocument?documentId=".$documentFetch['DOCUMENT_ID']."' type='submit'><i class='bi bi-pencil' id='editButton'></i></a></td>
+             <td><a style='color:black' href='".$documentFetch['FILE_PATH']."' target='_blank' type='submit' id='openButton'><i class='bi bi-file-earmark-pdf' id='openButton'></i></a></td>
+            <td><a style='color:black' href='adminEditSignal?documentId=".$documentFetch['DOCUMENT_ID']."' type='submit'><i class='bi bi-pencil' id='editButton'></i></a></td>
             <td><a style='color:black' href='adminDeleteDocument?documentId=".$documentFetch['DOCUMENT_ID']."' type='submit' onClick='javascript:return confirm(\"ARE YOU SURE YOU WANT TO DELETE THIS DOCUMENT??? DELETING THIS DOCUMENT REMOVES IT FROM THE DATABASE. CLICK OK TO DELETE AND CANCEL TO CANCEL .....\");'><i class='bi bi-trash' id='deleteButton'></i></a></td>
         </tr>";
 }
 
 } catch (Throwable $e) {
     // Code to handle other types of errors
-    echo '<div class="alert alert-dismissible" style="background-color: rgb(7, 102, 219); color:white; font-size:100%; text-align:center;
+  /*   echo '<div class="alert alert-dismissible" style="background-color: rgb(7, 102, 219); color:white; font-size:100%; text-align:center;
           font-family:Arial; margin-bottom:10px; z-index:5; border-radius:1px solid rgb(7, 102, 219); padding:9px; border-radius:2px;">
           <a href="adminRetrieve" class="close" data-dismiss="alert" aria-label="close" style="color:white; font-size:120%; text-align:left;
           font-family:Arial; text-decoration:none; padding:0px">&times;</a>
-          THE SELECTED FIELD HAS NOT BEEN ACTIVATED. TRY AGAIN LATER..
-          </div>';
+          THE SELECTED FIELD(S) HAS NOT BEEN ACTIVATED. TRY AGAIN LATER..
+          </div>'; */
 }
 }     
                                 

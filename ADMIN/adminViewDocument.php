@@ -54,11 +54,16 @@ include 'adminSideNavBar.php';
                     <div class="col-sm-7" style="margin-left:30px;">
                       <p style="text-align:justify; margin-top:5px;"><span style="font-weight:bold">SUBJECT: </span> <?php echo $row['SUBJECT']?></p>
                       <p style="text-align:justify; margin-top:5px;">
-                      <span style="font-weight:bold">DOCUMENT DATE: </span> <?php echo $row['DOCUMENT_DATE']." "?>
+                      <span style="font-weight:bold">DOCUMENT DATE: </span> <?php echo $row['DOCUMENT_DATE']." "?>                     
+                    </p>
+                     <p style="text-align:justify; margin-top:5px;">
                       <span style="font-weight:bold">DATE ARCHIVED: </span> <?php echo $row['DATE_ARCHIVED']?>
                     </p>
                      <p style="text-align:justify; margin-top:5px;">
                       <span style="font-weight:bold">DOCUMENT BODY: </span> <?php echo $row['BODY']." "?>
+                    </p>
+                     <p style="text-align:justify; margin-top:5px;">
+                      <span style="font-weight:bold">FILE PATH: </span> <?php echo $row['FILE_PATH']." "?>
                     </p>
                     <p style="text-align:justify; margin-top:5px;">
                        <a href="adminRetrieve" type="button" name="back" class="btn btn-primary" style="border-radius:2px; width:120px; height:45px; margin-top:10px;">BACK</a>

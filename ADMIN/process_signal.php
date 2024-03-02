@@ -8,29 +8,35 @@ $successMessage = '';
 $failureMessage = '';
 $errorMessage = '';
 
+
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['archive_signal'])) {
     // Process signal document form
     // Retrieve form data using $_POST
     // Perform necessary actions
     // Redirect to appropriate page
 
-                $documentType = $_POST['documentType'];
-                $preRef = $_POST['preRef'];
-                $refNo = $_POST['refNo'];
-                $postRef = $_POST['postRef'];
-                $ref = $_POST['ref'];
-                $directorate = $_POST['directorate'];
-                $securityClass = $_POST['securityClass'];
-                $documentDate = $_POST['documentDate'];
-                $dateArchived = $_POST['dateArchived'];
-                $dtg = $_POST['dtg'];
-                $controlNo = $_POST['controlNo'];
-                $subject = $_POST['subject'];
-                $body = $_POST['body'];
-                $filePath = $_POST['filePath'];
 
 
-                $documentResult = null;
+$documentType = $_POST['documentType'];
+$preRef = $_POST['preRef'];
+$refNo = $_POST['refNo'];
+$postRef = $_POST['postRef'];
+$ref = $_POST['ref'];
+$directorate = $_POST['directorate'];
+$securityClass = $_POST['securityClass'];
+$documentDate = $_POST['documentDate'];
+$dateArchived = $_POST['dateArchived'];
+$dtg = $_POST['dtg'];
+$controlNo = $_POST['controlNo'];
+$subject = $_POST['subject'];
+$body = $_POST['body'];
+$filePath = $_POST['filePath'];
+
+//initialize documentResult variable to avoid php's warning message if something goes wrong with the variable
+$documentResult = null;
+
+// Get the current time in HH:MM:SS format
+$current_time = date('H:i:s');
                 
     
           //create a function to validate user input
@@ -53,27 +59,39 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['archive_signal'])) {
 
 
 
-    //Create Unique document ID 
-$day = date('D');
-$month = date('F');
-$year = date('Y');
-$fmonth = substr($month, 0, 1);
-$fyear = substr($year, 2, 2);
-$fday = substr($day, 0, 1);
-$uniq = rand();
-$funiq = substr($uniq, 0, 2);
-$funiq1 = substr($uniq, 0, 1);
-$documentId =  'DOC'.$fmonth.$fday.$funiq1.$fyear.$funiq;
+//Create Unique document ID 
+$documentId =  uniqid();
 
+
+
+
+    // Check if a file was uploaded
+    if (isset($_FILES['filePath']) && $_FILES['filePath']['error'] == UPLOAD_ERR_OK) {
+        $tmpName = $_FILES['filePath']['tmp_name'];
+        $fileName = basename($_FILES['filePath']['name']);
+        $fileType = $_FILES['filePath']['type'];
+        $fileSize = $_FILES['filePath']['size'];
+        $fileContent = file_get_contents($tmpName);
+
+        // Generate a unique identifier for the filename in order to avoid document override by documents with the same name
+        $uniqueId = uniqid();
+        $fileName = $uniqueId . '_' . $fileName;
+
+        // Store the file in a specific directory
+        $uploadDir = '../uploads/';
+        $uploadPath = $uploadDir . $fileName;
 
 
 
      //Insert document Data Into the Database. 
-     $documentSQL = "INSERT INTO documents (DOCUMENT_ID, DOCUMENT_TYPE, SUBJECT, PRE_REF, REF_NO, POST_REF, REF, BODY, DIRECTORATE_ID, SY_CLASS, DOCUMENT_DATE, DATE_ARCHIVED, DTG, CONTROL_NO, FILE_PATH)
-     VALUES ('$documentId', '$documentType', '$subject', '$preRef', '$refNo', '$postRef', '$ref', '$body', '$directorate', '$securityClass', '$documentDate', '$dateArchived', '$dtg', '$controlNo', '$filePath')";
+     $documentSQL = "INSERT INTO documents (DOCUMENT_ID, DOCUMENT_TYPE, SUBJECT, PRE_REF, REF_NO, POST_REF, REF, BODY, DIRECTORATE_ID, SY_CLASS, DOCUMENT_DATE, DATE_ARCHIVED, TIME, DTG, CONTROL_NO, FILE_PATH)
+     VALUES ('$documentId', '$documentType', '$subject', '$preRef', '$refNo', '$postRef', '$ref', '$body', '$directorate', '$securityClass', '$documentDate', '$dateArchived', '$current_time', '$dtg', '$controlNo', '$uploadPath')";
      
      
-     
+       // Move the uploaded file to the final location
+        move_uploaded_file($tmpName, $uploadPath);
+
+
      //Check whether record has been inserted successfully
     try{
             if ($conn->query($documentSQL) == TRUE) {
@@ -84,18 +102,16 @@ $documentId =  'DOC'.$fmonth.$fday.$funiq1.$fyear.$funiq;
                 $action = "archive";
                 $description = "$userSvcNo"." "."archived a signal document with ref->$ref, document date->$documentDate and subject->$subject";
                 $account = $_SESSION['account'];
-
                 //call the log_event function
                 log_event($conn, $userSvcNo, $action, $description, $account);
             }else{
 
-                   $failureMessage = 'OOPS...! DOCUMENT ARCHIVE NOT SUCCESSFUL. TRY AGAIN';
+                $failureMessage = 'OOPS...! DOCUMENT ARCHIVE NOT SUCCESSFUL. TRY AGAIN';
                //declare or prepare variables for log_event function
                 $userSvcNo = $_SESSION['svcNo'];
                 $action = "failed attempt";
                 $description = "$userSvcNo"." "."tried to archive a signal document with ref->$ref, document date->$documentDate and subject->$subject";
                 $account = $_SESSION['account'];
-
                 //call the log_event function
                 log_event($conn, $userSvcNo, $action, $description, $account);
             }
@@ -105,6 +121,17 @@ $documentId =  'DOC'.$fmonth.$fday.$funiq1.$fyear.$funiq;
          echo "Caught exception: " . $e->getMessage();
      
             }
+}else{
+
+                $errorMessage = 'OOPS...! Error: No file uploaded or an error occurred.';
+               //declare or prepare variables for log_event function
+                $userSvcNo = $_SESSION['svcNo'];
+                $action = "failed attempt";
+                $description = "$userSvcNo"." "."tried to archive a signal document with ref->$ref, document date->$documentDate and subject->$subject";
+                $account = $_SESSION['account'];
+                //call the log_event function
+                log_event($conn, $userSvcNo, $action, $description, $account);
+}
 }
 ?>
 <main id="main" class="main">

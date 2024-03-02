@@ -1,8 +1,8 @@
 
 <?php 
+include 'adminHeader.php';
 include('../Connection.php');
 include('../functions.php');
-include 'adminHeader.php';
 include 'adminSideNavBar.php';
 
 
@@ -26,6 +26,17 @@ include 'adminSideNavBar.php';
       </nav>
     </div><!-- End Page Title -->
 
+     <?php
+
+                    // Check if a success message is set in the session
+                    if (isset($_SESSION['success_message'])) {
+                        // Display the success message
+                        echo '<div>' . $_SESSION['success_message'] . '</div>';
+
+                        // Unset the success message to prevent it from being displayed again on page reload
+                        unset($_SESSION['success_message']);
+            }
+    ?>
 
    <section class="section">
       <div class="row">
@@ -33,6 +44,7 @@ include 'adminSideNavBar.php';
 
           <div class="card" style="padding-left:50px; padding-right:50px;">
             <div class="card-body">
+           
               <h5 class="card-title">Users</h5>
             
               <!-- Table with stripped rows -->

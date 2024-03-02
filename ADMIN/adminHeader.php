@@ -65,7 +65,7 @@ session_start();
     </div><!-- End Logo -->
 
     <div class="search-bar">
-      <form method="post" action="adminNewUser" class="search-form d-flex align-items-center">
+      <form method="post" action="" class="search-form d-flex align-items-center">
         <input type="text" name="query" placeholder="Search" title="Enter search keyword">
         <button type="submit" title="Search"><i class="bi bi-search"></i></button>
       </form>

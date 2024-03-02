@@ -38,16 +38,7 @@ include 'adminSideNavBar.php';
 
 
     //Create Unique User ID 
-$day = date('D');
-$month = date('F');
-$year = date('Y');
-$fmonth = substr($month, 0, 1);
-$fyear = substr($year, 2, 2);
-$fday = substr($day, 0, 1);
-$uniq = rand();
-$funiq = substr($uniq, 0, 2);
-$funiq1 = substr($uniq, 0, 1);
-$userID =  'ST'.$fmonth.$fday.$funiq1.$fyear.$funiq;
+$userID =  uniqid();
 
 //check whether user's password is same with user's retyped password
 

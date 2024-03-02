@@ -1,41 +1,79 @@
 <?php 
 session_start();
-include('../Connection.php');
+include('../connection.php');
+include('../functions.php');
 
- $successMessage = '';
+$successMessage = '';
 
-    if(isset($_POST['update'])){
-          $userRole = $_POST['userRole'];
-          $svcNo = $_POST['svcNo'];
-          $rank = $_POST['rank'];
-          $initials = $_POST['initials'];
-          $surname = $_POST['surname'];
-          $password = $_POST['password'];
-          $confirmPassword = $_POST['confirmPassword'];
-    
-        //create a function to validate pers input
-        function validate($data){
-            $data = trim($data);
-            $data = stripslashes($data);
-            $data = htmlspecialchars($data);
-            return $data;
-        }
-    
- //validate pers input
 
-   $svcNo = validate($svcNo);
-    $initials = validate($initials);
-    $surname = validate($surname);
-    $password = validate($password);
-    $confirmPassword = validate($confirmPassword);
+//collect inputs from user if the user clicks the update button
+if(isset($_POST['update'])){
+$documentId = $_POST['documentId'];
+$documentType = $_POST['documentType'];
+$preRef = $_POST['preRef'];
+$refNo = $_POST['refNo'];
+$postRef = $_POST['postRef'];
+$ref = $_POST['ref'];
+$directorate = $_POST['directorate'];
+$securityClass = $_POST['securityClass'];
+$documentDate = $_POST['documentDate'];
+$dateArchived = $_POST['dateArchived'];
+$dtg = $_POST['dtg'];
+$controlNo = $_POST['controlNo'];
+$subject = $_POST['subject'];
+$body = $_POST['body'];
+$filePath = $_POST['filePath'];
+
+//initialize documentResult variable to avoid php's warning message if something goes wrong with the variable
+$documentResult = null;
+
+// Get the current time in HH:MM:SS format
+$current_time = date('H:i:s');
+                
     
-    
-   
+          //create a function to validate user input
+          function validate($data){
+              $data = trim($data);
+              $data = stripslashes($data);
+              $data = htmlspecialchars($data);
+              return $data;
+          }
+
+          
+          //validate user input
+          $preRef = validate($preRef);
+          $ref = validate($ref);
+          $postRef = validate($postRef);
+          $controlNo = validate($controlNo);
+          $dtg = validate($dtg);
+          $subject = validate($subject);
+          $body = validate($body);
+
+
+    // Check if a file was uploaded
+    if (isset($_FILES['filePath']) && $_FILES['filePath']['error'] == UPLOAD_ERR_OK) {
+        $tmpName = $_FILES['filePath']['tmp_name'];
+        $fileName = basename($_FILES['filePath']['name']);
+        $fileType = $_FILES['filePath']['type'];
+        $fileSize = $_FILES['filePath']['size'];
+        $fileContent = file_get_contents($tmpName);
+
+       
+        $fileName = $documentId . '_' . $fileName;
+
+        // Store the file in a specific directory
+        $uploadDir = '../uploads/';
+        $uploadPath = $uploadDir . $fileName;
+
+
 try{
 
-     $updateSQL = "UPDATE users SET USER_ROLE = '$userRole', PASSWORD = '$password', 
-    RANK = '$rank', INITIALS = '$initials', SURNAME = '$surname' WHERE SVC_NO = '$svcNo'";
+     $updateSQL = "UPDATE documents SET DOCUMENT_TYPE = '$documentType', SUBJECT = '$subject', PRE_REF = '$preRef', 
+    REF_NO = '$refNo', POST_REF = '$postRef', REF = '$ref', BODY = '$body', DIRECTORATE_ID = '$directorate', SY_CLASS = '$securityClass', DOCUMENT_DATE = '$documentDate', 
+    DATE_ARCHIVED = '$dateArchived', TIME = '$current_time', DTG = '$dtg', CONTROL_NO = '$controlNo', FILE_PATH = '$uploadPath' WHERE DOCUMENT_ID = '$documentId'";
      
+       // Move the uploaded file to the final location
+        move_uploaded_file($tmpName, $uploadPath);
     
     //Check whether record has been inserted successfully
 
@@ -43,14 +81,8 @@ try{
         throw new Exception();
 
     } else {
-        $_SESSION["success_message"] = '<div class="alert alert-dismissible" style="background-color: rgb(7, 102, 219); color:white; font-size:120%; text-align:center;
-                font-family:Arial; margin-bottom:10px; z-index:5; border-radius:1px solid rgb(7, 102, 219); padding:5px; border-radius:2px;">
-                <a href="adminUsers" class="close" data-dismiss="alert" aria-label="close" style="color:white; font-size:120%; text-align:left;
-                font-family:Arial; text-decoration:none; padding:0px">&times;</a>
-                USER UPDATED SUCCESSFULLY...
-                </div>';
-         header("Location: adminUsers");
-         exit();
+
+         header("Location: adminSignalSuccessMessage");
 
     }
     }catch(Exception $ex){
@@ -58,23 +90,20 @@ try{
     }
 
 }
+}
+   
 
-
-
-
-    
-
-    //get user ID and fetch selected user's record and assign them to variables
+   //get document ID and fetch selected document's record and assign them to variables
  
-    if(isset($_GET['svcNo'])){
-     $svcNo = $_GET['svcNo'];
-     $userSQL = "SELECT * FROM users WHERE SVC_NO = '$svcNo'";
-     $userResult = mysqli_query($conn, $userSQL);
+    if(isset($_GET['documentId'])){
+     $documentId = $_GET['documentId'];
+     $documentSQL = "SELECT * FROM documents WHERE DOCUMENT_ID = '$documentId'";
+     $documentResult = mysqli_query($conn, $documentSQL);
 
+
+    while($row = mysqli_fetch_assoc($documentResult)){
  
-    while($row = mysqli_fetch_assoc($userResult)){
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -124,7 +153,6 @@ try{
 }
   </style>
 </head>
-
 <body>
 
   <!-- ======= Header ======= -->
@@ -358,102 +386,121 @@ try{
 
 <?php include 'adminSideNavBar.php';?>
 
-   
+
 <main id="main" class="main">
     <div class="pagetitle">
-      <h1>EDIT USER</h1>
+      <h1>EDIT SIGNAL</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="adminHome">Home</a></li>
-          <li class="breadcrumb-item active">Edit User</li>
+          <li class="breadcrumb-item active">Edit Signal Dc</li>
         </ol>
       </nav>
-    </div><!-- End Page Title -->
-    <section class="section" id="newUserSection">
-      <div class="row" style="width:99%;">
-           <div class="card"  style="padding:30px;">
+    </div>
+    <!-- End Page Title -->
+
+
+             
+
+    <section class="section">
+      <div class="row">
+        <div class="col-lg-12">
+
+          <div class="card" style="padding-top:40px; padding-bottom:20px;">
             <div class="card-body">
+             <h4 class="card-title" style="padding-left:70px;">EDIT SIGNAL FORM</h4>
 
-               <!-- php block of code to display success, failure or error message starts here -->
-                <?php if (!empty($successMessage)): ?>
-              <div class="alert alert-dismissible" style="background-color: rgb(7, 102, 219); color:white; font-size:100%; text-align:center;
-              font-family:Arial; margin-bottom:10px; z-index:5; border-radius:1px solid rgb(7, 102, 219); padding:9px; border-radius:2px;">
-                <a href="newUser" class="close" data-dismiss="alert" aria-label="close" style="color:white; font-size:120%; text-align:left;
-                font-family:Arial; text-decoration:none; padding:0px">&times;</a>
-                <?php echo $successMessage; ?>
-              </div>
-            <?php endif; ?>
-              <h5 class="card-title">Edit User Form</h5>
-
-              <!-- Multi Columns Form -->
-              <form method="post" action="adminEditUser" class="row g-3">
-                 <div class="col-md-6">
-                  <label for="userRole" class="form-label">User Role</label>
-                  <select id="userRole" name="userRole" class="form-select">
-                    <option value="<?php echo $row['USER_ROLE']; ?>"><?php echo $row['USER_ROLE']; ?></option>
-                    <option value="UNIT_ADMIN">UNIT_ADMIN</option>
-                    <option value="UNIT_EDITOR">UNIT_EDITOR</option>
-                    <option value="UNIT_VIEWER">UNIT_VIEWER</option>
+             <!--  signal document form starts --> 
+                    <!-- Multi Columns Form -->
+              <form method="post" action="adminEditSignal" enctype="multipart/form-data" class="row g-3" style="padding-left:70px; padding-right:70px; padding-top:20px; padding-bottom:20px;">
+               <div class="col-md-2">
+                  <label for="documentType" class="form-label">TYPE:</label>
+                  <select id="documentType" name="documentType" class="form-select" style="border-radius:2px;" required>
+                        <option value="<?php echo $row['DOCUMENT_TYPE'];?>"><?php echo $row['DOCUMENT_TYPE'];?></option>
                   </select>
                 </div>
-                <div class="col-md-6">
-                  <label for="svcNo" class="form-label">Svc No</label>
-                  <input type="text" value="<?php echo $row['SVC_NO']; ?>" name="svcNo" class="form-control" id="svcNo" placeholder="Enter svc no" readonly style="background-color:#f5f8f9;">
+                  <div class="col-md-2">
+                  <label for="preRef" class="form-label">PRE-REF:</label>
+                  <input type="text" value="<?php echo $row['PRE_REF'];?>" name="preRef" class="form-control" id="preRef" placeholder="pre-ref" style="border-radius:2px;" required>
                 </div>
-                <div class="col-md-6">
-                  <label for="rank" class="form-label">Rank</label>
-                  <select id="rank" name="rank" class="form-select">
-                     <option value="<?php echo $row['RANK']; ?>"><?php echo $row['RANK']; ?></option>
-                     <option value="AVM">AVM</option>
-                     <option value="AIR CDRE">AIR CDRE</option>
-                     <option value="GP CAPT">GP CAPT</option>
-                     <option value="WG CDR">WG CDR</option>
-                     <option value="SQN LDR">SQN LDR</option>
-                     <option value="FLT LT">FLT LT</option>
-                     <option value="FG OFFR">FG OFFR</option>
-                     <option value="PLT OFFR">PLT OFFR</option>
-                     <option value="AWO">AWO</option>
-                     <option value="MWO">MWO</option>
-                     <option value="WO">WO</option>
-                     <option value="FS">FS</option>
-                     <option value="SGT">SGT</option>
-                     <option value="CPL">CPL</option>
-                     <option value="LCPL">LCPL</option>
-                     <option value="ACM">ACM</option>
-                     <option value="ACW">ACW</option>
+                 <div class="col-md-2">
+                  <label for="refNo" class="form-label">REF NO:</label>
+                   <select id="refNo" name="refNo" class="form-select" style="border-radius:2px;" required>
+                        <option value="<?php echo $row['PRE_REF'];?>"><?php echo $row['PRE_REF'];?></option>
+                        <option value="321">321</option>
+                        <option value="530">530</option>
+                        <option value="531">531</option>
                   </select>
                 </div>
-                  <div class="col-md-6">
-                  <label for="initials" class="form-label">Initials</label>
-                  <input type="text" value="<?php echo $row['INITIALS']; ?>" name="initials" class="form-control" id="initials" placeholder="Enter initials">
+                 <div class="col-md-2">
+                  <label for="postRef" class="form-label">POST-REF:</label>
+                  <input type="text" value="<?php echo $row['POST_REF'];?>" name="postRef" class="form-control" id="postRef" placeholder="post-ref" style="border-radius:2px;" required>
                 </div>
-                  <div class="col-md-6">
-                  <label for="surname" class="form-label">Surname</label>
-                  <input type="text" value="<?php echo $row['SURNAME']; ?>" name="surname" class="form-control" id="surname" placeholder="Enter surname">
+                 <div class="col-md-2">
+                  <label for="ref" class="form-label">REF:</label>
+                  <input type="text" value="<?php echo $row['REF'];?>" name="ref" class="form-control" id="ref" placeholder="ref" style="border-radius:2px;" required>
                 </div>
-                <div class="col-md-6">
-                  <label for="password" class="form-label">Password</label>
-                  <input type="password" value="<?php echo $row['PASSWORD']; ?>" name="password" class="form-control" id="password" placeholder="Enter password">
+                 <div class="col-md-2">
+                  <label for="documentDate" class="form-label">DOC  DATE:</label>
+                  <input type="date" value="<?php echo $row['DOCUMENT_DATE'];?>" name="documentDate" class="form-control" id="documentDate" placeholder="" style="border-radius:2px;" required>
                 </div>
-                  <div class="col-md-12">
-                  <label for="confirmPassword" class="form-label">Confirm Password</label>
-                  <input type="password" value="<?php echo $row['PASSWORD']; ?>" name="confirmPassword" class="form-control" id="confirmPassword">
-                </div>
-                <div class="col-12">
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="gridCheck">
-                    <label class="form-check-label" for="gridCheck">
-                      Check me out
-                    </label>
+                  <div class="col-md-2">
+                  <label for="securityClass" class="form-label">SY CLASS:</label>
+                   <select id="securityClass" name="securityClass" class="form-select" style="border-radius:2px;" required>
+                        <option value="<?php echo $row['SY_CLASS'];?>"><?php echo $row['SY_CLASS'];?></option>
+                        <option value="TOP SECRET">Top Secret</option>
+                         <option value="SECRET">Secret</option>
+                          <option value="CONFIDENTIAL">Confidential</option>
+                           <option value="RESTRICTED">Restricted</option>
+                  </select>
                   </div>
+                  <div class="col-md-2">
+                  <label for="dtg" class="form-label">DTG:</label>
+                  <input type="text" value="<?php echo $row['DTG'];?>" name="dtg" class="form-control" id="dtg" placeholder="Enter dtg" style="border-radius:2px;" required>
                 </div>
-                <div class="">
-                  <button type="submit" name="update" class="btn btn-primary" style="border-radius:2px; width:120px; height:50px">UPDATE</button>
+                <div class="col-md-2">
+                  <label for="directorate" class="form-label">DIR:</label>
+                   <select id="directorate" name="directorate" class="form-select" style="border-radius:2px;" required>
+                        <option value="<?php echo $row['DIRECTORATE_ID'];?>"><?php echo $row['DIRECTORATE_ID'];?></option>
+                        <option value="DIT">DIT</option>
+                  </select>
+                  </div>
+                <div class="col-md-2">
+                  <label for="controlNo" class="form-label">CONTROL:</label>
+                  <input type="text" value="<?php echo $row['CONTROL_NO'];?>" name="controlNo" class="form-control" id="controlNo" placeholder="control no" style="border-radius:2px;" required>
                 </div>
-              </form><!-- End Multi Columns Form -->
+                <div class="col-md-2">
+                  <label for="dateArchived" class="form-label">DATE:</label>
+                  <input type="date" value="<?php echo $row['DATE_ARCHIVED'];?>" name="dateArchived" class="form-control" id="dateArchived" placeholder="" style="border-radius:2px;" required>
+                </div>
+                <div class="col-md-2">
+                  <label for="filePath" class="form-label">UPLOAD:</label>
+                   <input type="file" name="filePath" class="form-control" id="filePath" placeholder="choose" style="border-radius:2px;" required>
+                </div>
+                <div class="col-md-12">
+                  <label for="subject" class="form-label">SUBJECT</label>
+                  <input type="text" value="<?php echo $row['SUBJECT'];?>" name="subject" class="form-control" id="subject" placeholder="Enter subject" style="border-radius:2px;" required>
+                </div>
+                <div class="col-md-12">
+                  <label for="body" class="form-label">BODY</label>
+                  <input type="text" value="<?php echo $row['BODY'];?>" name="body" class="form-control" id="body" placeholder="Enter body" style="border-radius:2px;" required>
+                </div>
+                <div class="col-md-12">
+                  <label for="documentId" class="form-label"></label>
+                  <input type="hidden" value="<?php echo $row['DOCUMENT_ID'];?>" name="documentId" class="form-control" id="documentId" placeholder="" style="border-radius:2px;" required>
+                </div>
+                 <div class="col-md-12">
+                      <button type="submit" name="update" style="border-radius:1px;" class="btn btn-primary">UPDATE</button>
+                 </div>
+               </form>
+              <!-- End Multi Columns Form -->
 
+              <!-- signal document form ends -->
+             
             </div>
           </div>
+
+        </div>
       </div>
     </section>
 
@@ -462,5 +509,5 @@ try{
 
  <?php include 'adminFooter.php'; ?>
  <?php
-
-}}?>
+}}
+?>

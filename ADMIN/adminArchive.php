@@ -1,7 +1,7 @@
-<?php 
+<?php
+include 'adminHeader.php'; 
 include('../connection.php');
 include('../functions.php');
-include 'adminHeader.php';
 include 'adminSideNavBar.php';
 
 ?>
@@ -18,11 +18,23 @@ include 'adminSideNavBar.php';
       </nav>
     </div><!-- End Page Title -->
 
+         <?php
+
+                    // Check if a success message is set in the session
+                    if (isset($_SESSION['success_message'])) {
+                        // Display the success message
+                        echo '<div>' . $_SESSION['success_message'] . '</div>';
+
+                        // Unset the success message to prevent it from being displayed again on page reload
+                        unset($_SESSION['success_message']);
+            }
+    ?>
+
     <section class="section">
       <div class="row">
         <div class="col-lg-12">
 
-          <div class="card" style="border-radius:1px; padding:20px; padding-bottom:40px;">
+          <div class="card" style="padding:20px; padding-bottom:40px; border-radius:0px;">
             <div class="card-body">
               <h5 class="card-title">DOCUMENTS</h5>
               <p>
@@ -32,21 +44,21 @@ include 'adminSideNavBar.php';
 
 
             <!-- Extra Large Modal -->
-              <button type="button" style="border-radius:1px; margin-top:20px; margin-right:5px; padding:15px;" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ExtralargeModal">
+              <button type="button" style="border-radius:1px; margin-top:20px; margin-right:5px; padding:15px; width:30%;" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ExtralargeModal">
                SIGNAL DOCUMENTS
               </button>
 
-              <div class="modal fade" id="ExtralargeModal" tabindex="-1">
-                <div class="modal-dialog modal-xl">
-                  <div class="modal-content" style="border-radius:1px;">
-                    <div class="modal-header">
-                      <h5 class="modal-title">SIGNAL DOCUMENTS</h5>
-                      <button type="button" style="border-radius:1px;" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              <div class="modal fade" id="ExtralargeModal" tabindex="-1" style="border-radius:0px;">
+                <div class="modal-dialog modal-xl" style="border-radius:0px;">
+                  <div class="modal-content" style="border-radius:0px;">
+                    <div class="modal-header" style="border-radius:0px;">
+                      <h5 class="modal-title" style="border-radius:0px;">SIGNAL DOCUMENTS</h5>
+                      <button type="button" style="" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body" style="padding-bottom:50px;">
                     <!--  signal document form starts --> 
                     <!-- Multi Columns Form -->
-              <form method="post" action="process_signal" class="row g-3" style="padding-left:70px; padding-right:70px; padding-top:20px; padding-bottom:20px;">
+              <form method="post" action="process_signal" enctype="multipart/form-data" class="row g-3" style="padding-left:70px; padding-right:70px; padding-top:20px; padding-bottom:20px;">
                <div class="col-md-3">
                   <label for="documentType" class="form-label">TYPE:</label>
                   <select id="documentType" name="documentType" class="form-select" style="border-radius:2px;" required>
@@ -137,7 +149,7 @@ include 'adminSideNavBar.php';
 
 
               <!-- Large Modal -->
-              <button type="button" style="border-radius:2px; margin-top:20px; padding:15px;" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#largeModal">
+              <button type="button" style="border-radius:2px; margin-top:20px; padding:15px; width:30%;" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#largeModal">
                 OTHER DOCUMENTS
               </button>
 
@@ -151,7 +163,7 @@ include 'adminSideNavBar.php';
                     <div class="modal-body" style="padding:70px; padding-top:20px;">
                      <!--  other documents form starts --> 
                     <!-- Multi Columns Form -->
-              <form method="post" action="process_others" class="row g-3">
+              <form method="post" action="process_others" enctype="multipart/form-data" class="row g-3">
                    <div class="col-md-12">
                   <label for="documentType" class="form-label">TYPE:</label>
                   <select id="documentType" name="documentType" class="form-select" style="border-radius:2px;" required>
@@ -224,8 +236,8 @@ include 'adminSideNavBar.php';
                   <input type="date" name="dateArchived" class="form-control" id="dateArchived" placeholder="" style="border-radius:2px;" required>
                 </div>
                 <div class="col-md-12">
-                  <label for="upload" class="form-label">UPLOAD:</label>
-                   <input type="file" name="upload" class="form-control" id="upload" placeholder="choose" style="border-radius:2px;" required>
+                  <label for="filePath" class="form-label">UPLOAD:</label>
+                   <input type="file" name="filePath" class="form-control" id="filePath" placeholder="choose" style="border-radius:2px;" required>
                 </div>
                 <div class="col-md-12">
                   <label for="subject" class="form-label">SUBJECT</label>
@@ -247,119 +259,6 @@ include 'adminSideNavBar.php';
                   </div>
                 </div>
               </div><!-- End Large Modal-->
-
-
-                  <!-- Basic Modal -->
-              <button type="button" style="border-radius:2px; margin-top:20px; margin-right:5px; padding:15px;" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#basicModal">
-                UNKNOWN DOCUMENTS
-              </button>
-              <div class="modal fade" id="basicModal" tabindex="-1">
-                <div class="modal-dialog">
-                  <div class="modal-content" style="border-radius:1px;">
-                    <div class="modal-header">
-                      <h5 class="modal-title">UNKNOWN DOCUMENTS</h5>
-                      <button type="button" style="border-radius:1px;" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body" style="padding:70px; padding-top:20px;">
-                    <!--  unknown documents form starts --> 
-                    <!-- Multi Columns Form -->
-              <form method="post" action="process_unknown" class="row g-3" style="">
-               <div class="col-md-12">
-                  <label for="documentType" class="form-label">TYPE:</label>
-                  <select id="documentType" name="documentType" class="form-select" style="border-radius:2px;" required>
-                        <option value="">..select..</option>
-                        <option value="Signal">Signal</option>
-                        <option value="Loose Minute">Loose Minute</option>
-                        <option value="Letter">Letter</option>
-                        <option value="Memo">Memo</option>
-                        <option value="Minutes of Meeting">Minutes of Meeting</option>
-                        <option value="Electronic Short Msg">Electronic Short Msg</option>
-                        <option value="Admin Orders">Admin Orders</option>
-                        <option value="Instr for Tac Ex">Instr for Tac Ex</option>
-                        <option value="Confirmatory Notes">Confirmatory Notes</option>
-                        <option value="Extimate Process">Extimate Process</option>
-                        <option value="Annexs & Appendices">Annexs & Appendices</option>
-                        <option value="Float">Float</option>
-                  </select>
-                </div>
-                  <div class="col-md-12">
-                  <label for="preRef" class="form-label">PRE-REF:</label>
-                  <input type="text" name="preRef" class="form-control" id="preRef" placeholder="pre-ref" style="border-radius:2px;" required>
-                </div>
-                 <div class="col-md-12">
-                  <label for="refNo" class="form-label">REF NO:</label>
-                   <select id="refNo" name="refNo" class="form-select" style="border-radius:2px;" required>
-                        <option value="">..select..</option>
-                        <option value="321">321</option>
-                        <option value="530">530</option>
-                        <option value="531">531</option>
-                  </select>
-                </div>
-                 <div class="col-md-12">
-                  <label for="postRef" class="form-label">POST-REF:</label>
-                  <input type="text" name="postRef" class="form-control" id="postRef" placeholder="post-ref" style="border-radius:2px;" required>
-                </div>
-                 <div class="col-md-12">
-                  <label for="ref" class="form-label">REF:</label>
-                  <input type="text" name="ref" class="form-control" id="ref" placeholder="ref" style="border-radius:2px;" required>
-                </div>
-                 <div class="col-md-12">
-                  <label for="documentDate" class="form-label">DOC  DATE:</label>
-                  <input type="date" name="documentDate" class="form-control" id="documentDate" placeholder="" style="border-radius:2px;" required>
-                </div>
-                  <div class="col-md-12">
-                  <label for="securityClass" class="form-label">SY CLASS:</label>
-                   <select id="securityClass" name="securityClass" class="form-select" style="border-radius:2px;" required>
-                        <option value="">..select..</option>
-                        <option value="TOP SECRET">Top Secret</option>
-                         <option value="SECRET">Secret</option>
-                          <option value="CONFIDENTIAL">Confidential</option>
-                           <option value="RESTRICTED">Restricted</option>
-                  </select>
-                  </div>
-                  <div class="col-md-12">
-                  <label for="dtg" class="form-label">DTG:</label>
-                  <input type="text" name="dtg" class="form-control" id="dtg" placeholder="Enter dtg" style="border-radius:2px;" required>
-                </div>
-                <div class="col-md-12">
-                  <label for="directorate" class="form-label">DIR:</label>
-                   <select id="directorate" name="directorate" class="form-select" style="border-radius:2px;" required>
-                        <option value="">..select..</option>
-                        <option value="">DIT</option>
-                  </select>
-                  </div>
-                <div class="col-md-12">
-                  <label for="controlNo" class="form-label">CONTROL:</label>
-                  <input type="text" name="controlNo" class="form-control" id="controlNo" placeholder="control no" style="border-radius:2px;" required>
-                </div>
-                <div class="col-md-12">
-                  <label for="dateArchived" class="form-label">DATE:</label>
-                  <input type="date" name="dateArchived" class="form-control" id="dateArchived" placeholder="" style="border-radius:2px;" required>
-                </div>
-                <div class="col-md-12">
-                  <label for="upload" class="form-label">UPLOAD:</label>
-                   <input type="file" name="upload" class="form-control" id="upload" placeholder="choose" style="border-radius:2px;" required>
-                </div>
-                <div class="col-md-12">
-                  <label for="subject" class="form-label">SUBJECT</label>
-                  <input type="text" name="subject" class="form-control" id="subject" placeholder="Enter subject" style="border-radius:2px;" required>
-                </div>
-                <div class="col-md-12">
-                  <label for="body" class="form-label">BODY</label>
-                  <input type="text" name="body" class="form-control" id="body" placeholder="Enter body" style="border-radius:2px;" required>
-                </div>
-                <div class="col-md-12">
-                      <button type="button" style="border-radius:1px;" class="btn btn-secondary" data-bs-dismiss="modal">CLOSE</button>
-                      <button type="submit" name="archive_unknown" style="border-radius:1px;" class="btn btn-primary">ARCHIVE</button>
-                    </div>
-               </form>
-              <!-- End Multi Columns Form -->
-
-              <!-- unkown document form ends -->
-                    </div>
-                  </div>
-                </div>
-              </div><!-- End Basic Modal-->
 
 
             </div>
