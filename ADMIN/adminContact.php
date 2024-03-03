@@ -2,7 +2,15 @@
 
 <?php include 'adminSideNavBar.php'; ?>
 
-<main id="main" class="main">
+<main id="main" class="main"
+ style="
+    background-image: url('../IMAGES/img1.jpg'); 
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+    zIndex:-1;
+    "
+>
 
     <div class="pagetitle">
       <h1>Contact</h1>
@@ -23,28 +31,28 @@
 
           <div class="row">
             <div class="col-lg-6">
-              <div class="info-box card">
+              <div class="info-box card" style="border-radius:1px;">
                 <i class="bi bi-geo-alt"></i>
                 <h3>Address</h3>
                 <p>Nigerian Defence HQ<br>Area 7, Garki, Abuja</p>
               </div>
             </div>
             <div class="col-lg-6">
-              <div class="info-box card">
+              <div class="info-box card" style="border-radius:1px;">
                 <i class="bi bi-telephone"></i>
                 <h3>Call Us</h3>
                 <p>09-8746907<br>+234 7056546750</p>
               </div>
             </div>
             <div class="col-lg-6">
-              <div class="info-box card">
+              <div class="info-box card" style="border-radius:1px;">
                 <i class="bi bi-envelope"></i>
                 <h3>Email Us</h3>
                 <p>dit@airforce.mil.ng<br>dosaf@airforce.mil.ng</p>
               </div>
             </div>
             <div class="col-lg-6">
-              <div class="info-box card">
+              <div class="info-box card" style="border-radius:1px;">
                 <i class="bi bi-clock"></i>
                 <h3>Open Hours</h3>
                 <p>Monday - Friday<br>8:00AM - 04:00PM</p>
@@ -55,7 +63,7 @@
         </div>
 
         <div class="col-xl-6">
-          <div class="card p-4">
+          <div class="card p-4" style="border-radius:1px;">
             <form action="" method="post" class="php-email-form">
               <div class="row gy-4">
 

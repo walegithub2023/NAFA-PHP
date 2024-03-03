@@ -5,7 +5,15 @@ include 'adminHeader.php';
 include 'adminSideNavBar.php';      
 ?>
 
-<main id="main" class="main">
+<main id="main" class="main"
+ style="
+    background-image: url('../IMAGES/img1.jpg'); 
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+    zIndex:-1;
+    "
+>
    <!--  <div class="pagetitle">
       <h1>RETRIEVE</h1>
       <nav>
@@ -22,7 +30,7 @@ include 'adminSideNavBar.php';
     <!-- retrieve document form section starts -->
     <section class="section" id="retrieveFormSection" style="font-size:90%;">
       <div class="row">
-           <div class="card"  style="padding:40px;">
+           <div class="card"  style="padding:40px; border-radius:1px;">
             <div class="card-body">
 
              <h4 class="">RETRIEVE FORM</h4>
@@ -138,7 +146,7 @@ include 'adminSideNavBar.php';
     <section class="section" id="retrieveFormSection" style="font-size:90%">
       <div class="row">
 
-          <div class="card" style="padding:40px;">
+          <div class="card" style="padding:40px; border-radius:1px;">
             <div class="card-body">
              <!--  <h5 class="card-title">RETRIEVED</h5> -->
             
@@ -671,7 +679,7 @@ include 'adminSideNavBar.php';
              <td>".$documentFetch['TIME']."</td>
             <td><a style='color:black' href='adminViewDocument?documentId=".$documentFetch['DOCUMENT_ID']."' type='submit' id='viewButton'><i class='bi bi-eye' id='viewButton'></i></a></td>
              <td><a style='color:black' href='".$documentFetch['FILE_PATH']."' target='_blank' type='submit' id='openButton'><i class='bi bi-file-earmark-pdf' id='openButton'></i></a></td>
-            <td><a style='color:black' href='adminEditSignal?documentId=".$documentFetch['DOCUMENT_ID']."' type='submit'><i class='bi bi-pencil' id='editButton'></i></a></td>
+            <td><a style='color:black' href='adminEditDocument?documentId=".$documentFetch['DOCUMENT_ID']."' type='submit'><i class='bi bi-pencil' id='editButton'></i></a></td>
             <td><a style='color:black' href='adminDeleteDocument?documentId=".$documentFetch['DOCUMENT_ID']."' type='submit' onClick='javascript:return confirm(\"ARE YOU SURE YOU WANT TO DELETE THIS DOCUMENT??? DELETING THIS DOCUMENT REMOVES IT FROM THE DATABASE. CLICK OK TO DELETE AND CANCEL TO CANCEL .....\");'><i class='bi bi-trash' id='deleteButton'></i></a></td>
         </tr>";
 }

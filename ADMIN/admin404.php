@@ -2,7 +2,15 @@
 <?php include 'adminHeader.php'; ?>
 <?php include 'adminSideNavBar.php'; ?>
 
-<main id="main" class="main">
+<main id="main" class="main"
+ style="
+    background-image: url('../IMAGES/img1.jpg'); 
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+    zIndex:-1;
+    "
+>
       <div class="row" id="text404div">
         <p id="text404">404</p>
       </div>

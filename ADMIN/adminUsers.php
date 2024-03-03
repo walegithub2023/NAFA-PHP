@@ -13,7 +13,15 @@ include 'adminSideNavBar.php';
 
 ?>
 
-<main id="main" class="main">
+<main id="main" class="main"
+  style="
+    background-image: url('../IMAGES/img1.jpg'); 
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+    zIndex:-1;
+    "
+>
 
     <div class="pagetitle">
       <h1>USERS</h1>
@@ -35,14 +43,32 @@ include 'adminSideNavBar.php';
 
                         // Unset the success message to prevent it from being displayed again on page reload
                         unset($_SESSION['success_message']);
+            }else 
+            
+            // Check if a failure message is set in the session for deleting of users
+                    if (isset($_SESSION['failure_message'])) {
+                        // Display the success message
+                        echo '<div>' . $_SESSION['failure_message'] . '</div>';
+
+                        // Unset the failure message to prevent it from being displayed again on page reload
+                        unset($_SESSION['failure_message']);
+            }else
+            // Check if a successMessageForDeleteUser message is set in the session for deleting of users
+                    if (isset($_SESSION['successMessageForDeleteUser'])) {
+                        // Display the success message
+                        echo '<div>' . $_SESSION['successMessageForDeleteUser'] . '</div>';
+
+                        // Unset the success message to prevent it from being displayed again on page reload
+                        unset($_SESSION['successMessageForDeleteUser']);
             }
+
     ?>
 
    <section class="section">
       <div class="row">
         <div class="col-lg-12">
 
-          <div class="card" style="padding-left:50px; padding-right:50px;">
+          <div class="card" style="padding-left:50px; padding-right:50px; border-radius:1px;">
             <div class="card-body">
            
               <h5 class="card-title">Users</h5>

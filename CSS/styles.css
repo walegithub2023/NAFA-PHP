@@ -1,13 +1,4 @@
 /* Home page main section styling starts */
-#homeHeader {
-  background-color: white;
-  color: #4154f1;
-  font-size: 150%;
-  text-align: center;
-  margin: 10px auto;
-  width: 80%;
-  font-weight: bold;
-}
 
 #homeParagraphText {
   font-family: "Times New Roman", Times, serif;

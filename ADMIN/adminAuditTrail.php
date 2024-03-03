@@ -11,7 +11,15 @@ include 'adminSideNavBar.php';
 
 ?>
 
-<main id="main" class="main">
+<main id="main" class="main"
+ style="
+    background-image: url('../IMAGES/img1.jpg'); 
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+    zIndex:-1;
+    "
+>
 
     <div class="pagetitle">
       <h1>AUDIT</h1>
@@ -28,7 +36,7 @@ include 'adminSideNavBar.php';
    <section class="section">
       <div class="row">
         <div class="col-lg-12">
-          <div class="card" style="padding-left:50px; padding-right:50px;">
+          <div class="card" style="padding-left:50px; padding-right:50px; border-radius:1px;">
             <div class="card-body">
               <h5 class="card-title">Audit Trail</h5>
             
@@ -67,12 +75,14 @@ include 'adminSideNavBar.php';
               <!-- End Table with stripped rows -->
                 <a style="color:grey; margin-top:30px; margin-bottom:20px; margin-left:5px; font-size:300%;" href='adminDeleteAllAuditTrail' type="submit" onClick='javascript:return confirm("\nARE YOU SURE YOU WANT TO DELETE ALL AUDIT RECORDS??? DELETING THESE RECORDS REMOVES ALL AUDIT RECORDS FROM THE DATABASE. CLICK OK TO DELETE AND CANCEL TO CANCEL .....\n");'><i class='bi bi-trash' id='deleteButton'></i>
             
-          </div>
+        </div>
 
         </div>
       </div>
     </section>
 
-  </main><!-- End #main -->
+  </main>
+  <!-- End #main -->
+
 
 <?php include 'adminFooter.php'; ?>

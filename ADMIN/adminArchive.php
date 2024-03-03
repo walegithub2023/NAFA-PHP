@@ -6,7 +6,14 @@ include 'adminSideNavBar.php';
 
 ?>
 
-<main id="main" class="main">
+<main id="main" class="main" 
+    style="
+    background-image: url('../IMAGES/img1.jpg'); 
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+    zIndex:-1;
+    ">
 
     <div class="pagetitle">
       <h1>ARCHIVE</h1>
@@ -19,17 +26,67 @@ include 'adminSideNavBar.php';
     </div><!-- End Page Title -->
 
          <?php
-
-                    // Check if a success message is set in the session
-                    if (isset($_SESSION['success_message'])) {
+                    //MESSAGES FROM adminProcessSignalDocuments START HERE
+                    // Check if a success message is set in the session for successful signal archive
+                    if (isset($_SESSION['successMessageForSignal'])) {
                         // Display the success message
-                        echo '<div>' . $_SESSION['success_message'] . '</div>';
+                        echo '<div>' . $_SESSION['successMessageForSignal'] . '</div>';
 
-                        // Unset the success message to prevent it from being displayed again on page reload
-                        unset($_SESSION['success_message']);
+                        // Unset the success message for signal archive to prevent it from being displayed again on page reload
+                        unset($_SESSION['successMessageForSignal']);
+            }else
+
+            // Check if a failure message is set in the session for  signal archive failure
+            if (isset($_SESSION['failureMessageForSignal'])) {
+                        // Display the failure message
+                        echo '<div>' . $_SESSION['failureMessageForSignal'] . '</div>';
+
+                        // Unset the failure message for signal archive to prevent it from being displayed again on page reload
+                        unset($_SESSION['failureMessageForSignal']);
+            }else
+            
+            // Check if an error message is set in the session for signal archive error
+            if (isset($_SESSION['errorMessageForSignal'])) {
+                        // Display the error message
+                        echo '<div>' . $_SESSION['errorMessageForSignal'] . '</div>';
+
+                        // Unset the error message for signal archive to prevent it from being displayed again on page reload
+                        unset($_SESSION['errorMessageForSignal']);
             }
+            //MESSAGES FROM adminProcessSignalDocuments END HERE
     ?>
+    
+    <?php 
+            //MESSAGES FROM adminProcessOtherDocuments START HERE
+               // Check if a success message is set in the session for successful other documents archive
+                    if (isset($_SESSION['successMessageForOtherDocuments'])) {
+                        // Display the success message
+                        echo '<div>' . $_SESSION['successMessageForOtherDocuments'] . '</div>';
 
+                        // Unset the success message for other documents archive to prevent it from being displayed again on page reload
+                        unset($_SESSION['successMessageForOtherDocuments']);
+            }else
+
+            // Check if a failure message is set in the session for  other documents archive failure
+            if (isset($_SESSION['failureMessageForOtherDocuments'])) {
+                        // Display the failure message
+                        echo '<div>' . $_SESSION['failureMessageForOtherDocuments'] . '</div>';
+
+                        // Unset the failure message for other documents archive to prevent it from being displayed again on page reload
+                        unset($_SESSION['failureMessageForOtherDocuments']);
+            }else
+            
+            // Check if an error message is set in the session for other documents archive error
+            if (isset($_SESSION['errorMessageForOtherDocuments'])) {
+                        // Display the error message
+                        echo '<div>' . $_SESSION['errorMessageForOtherDocuments'] . '</div>';
+
+                        // Unset the error message for other documents archive to prevent it from being displayed again on page reload
+                        unset($_SESSION['errorMessageForOtherDocuments']);
+                         //MESSAGES FROM adminProcessOtherDocuments END HERE
+            }
+    
+    ?>
     <section class="section">
       <div class="row">
         <div class="col-lg-12">
@@ -55,10 +112,19 @@ include 'adminSideNavBar.php';
                       <h5 class="modal-title" style="border-radius:0px;">SIGNAL DOCUMENTS</h5>
                       <button type="button" style="" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body" style="padding-bottom:50px;">
+                    <div class="modal-body" 
+                    style="
+                      padding-bottom:50px;
+                      background-image: url('../IMAGES/img1.jpg'); 
+                      background-size: cover;
+                      background-position: center;
+                      min-height: 100vh;
+                      width: 100%;
+                      zIndex:-1;
+                    ">
                     <!--  signal document form starts --> 
                     <!-- Multi Columns Form -->
-              <form method="post" action="process_signal" enctype="multipart/form-data" class="row g-3" style="padding-left:70px; padding-right:70px; padding-top:20px; padding-bottom:20px;">
+              <form method="post" action="adminProcessSignalDocuments" enctype="multipart/form-data" class="row g-3" style="padding-left:70px; padding-right:70px; padding-top:20px; padding-bottom:20px;">
                <div class="col-md-3">
                   <label for="documentType" class="form-label">TYPE:</label>
                   <select id="documentType" name="documentType" class="form-select" style="border-radius:2px;" required>
@@ -110,6 +176,7 @@ include 'adminSideNavBar.php';
                    <select id="directorate" name="directorate" class="form-select" style="border-radius:2px;" required>
                         <option value="">..select..</option>
                         <option value="DIT">DIT</option>
+                        <option value="DCOMMS">DCOMMS</option>
                   </select>
                   </div>
                 <div class="col-md-3">
@@ -160,11 +227,21 @@ include 'adminSideNavBar.php';
                       <h5 class="modal-title">OTHER DOCUMENTS</h5>
                       <button type="button" style="border-radius:1px;" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body" style="padding:70px; padding-top:20px;">
+                    <div class="modal-body" 
+                    style="
+                    padding:70px; 
+                    padding-top:20px;
+                    background-image: url('../IMAGES/img1.jpg'); 
+                    background-size: cover;
+                    background-position: center;
+                    min-height: 100vh;
+                    width: 100%;
+                    zIndex:-1;
+                    ">
                      <!--  other documents form starts --> 
                     <!-- Multi Columns Form -->
-              <form method="post" action="process_others" enctype="multipart/form-data" class="row g-3">
-                   <div class="col-md-12">
+              <form method="post" action="adminProcessOtherDocuments" enctype="multipart/form-data" class="row g-3">
+                   <div class="col-md-3">
                   <label for="documentType" class="form-label">TYPE:</label>
                   <select id="documentType" name="documentType" class="form-select" style="border-radius:2px;" required>
                         <option value="">..select..</option>
@@ -181,11 +258,11 @@ include 'adminSideNavBar.php';
                         <option value="Float">Float</option>
                   </select>
                 </div>
-                  <div class="col-md-12">
+                  <div class="col-md-3">
                   <label for="preRef" class="form-label">PRE-REF:</label>
                   <input type="text" name="preRef" class="form-control" id="preRef" placeholder="pre-ref" style="border-radius:2px;" required>
                 </div>
-                 <div class="col-md-12">
+                 <div class="col-md-3">
                   <label for="refNo" class="form-label">REF NO:</label>
                    <select id="refNo" name="refNo" class="form-select" style="border-radius:2px;" required>
                         <option value="">..select..</option>
@@ -194,19 +271,19 @@ include 'adminSideNavBar.php';
                         <option value="531">531</option>
                   </select>
                 </div>
-                 <div class="col-md-12">
+                 <div class="col-md-3">
                   <label for="postRef" class="form-label">POST-REF:</label>
                   <input type="text" name="postRef" class="form-control" id="postRef" placeholder="post-ref" style="border-radius:2px;" required>
                 </div>
-                 <div class="col-md-12">
+                 <div class="col-md-3">
                   <label for="ref" class="form-label">REF:</label>
                   <input type="text" name="ref" class="form-control" id="ref" placeholder="ref" style="border-radius:2px;" required>
                 </div>
-                 <div class="col-md-12">
+                 <div class="col-md-3">
                   <label for="documentDate" class="form-label">DOC  DATE:</label>
                   <input type="date" name="documentDate" class="form-control" id="documentDate" placeholder="" style="border-radius:2px;" required>
                 </div>
-                  <div class="col-md-12">
+                  <div class="col-md-3">
                   <label for="securityClass" class="form-label">SY CLASS:</label>
                    <select id="securityClass" name="securityClass" class="form-select" style="border-radius:2px;" required>
                         <option value="">..select..</option>
@@ -216,21 +293,14 @@ include 'adminSideNavBar.php';
                            <option value="RESTRICTED">Restricted</option>
                   </select>
                   </div>
-                  <div class="col-md-12">
-                  <label for="dtg" class="form-label">DTG:</label>
-                  <input type="text" name="dtg" class="form-control" id="dtg" placeholder="Enter dtg" style="border-radius:2px;" required>
-                </div>
-                <div class="col-md-12">
+                <div class="col-md-3">
                   <label for="directorate" class="form-label">DIR:</label>
                    <select id="directorate" name="directorate" class="form-select" style="border-radius:2px;" required>
                         <option value="">..select..</option>
-                        <option value="">DIT</option>
+                        <option value="DIT">DIT</option>
+                        <option value="DCOMMS">DCOMMS</option>
                   </select>
                   </div>
-                <div class="col-md-12">
-                  <label for="controlNo" class="form-label">CONTROL:</label>
-                  <input type="text" name="controlNo" class="form-control" id="controlNo" placeholder="control no" style="border-radius:2px;" required>
-                </div>
                 <div class="col-md-12">
                   <label for="dateArchived" class="form-label">DATE:</label>
                   <input type="date" name="dateArchived" class="form-control" id="dateArchived" placeholder="" style="border-radius:2px;" required>

@@ -94,7 +94,15 @@ if($password==$confirmPassword){
 }
 ?>
 
-<main id="main" class="main">
+<main id="main" class="main"
+   style="
+    background-image: url('../IMAGES/img1.jpg'); 
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+    zIndex:-1;
+    "
+>
     <div class="pagetitle">
       <h1>NEW USER</h1>
       <nav>
@@ -104,12 +112,14 @@ if($password==$confirmPassword){
         </ol>
       </nav>
     </div><!-- End Page Title -->
+
     <section class="section" id="newUserSection">
       <div class="row" style="width:99%;">
-           <div class="card"  style="padding:30px;">
+           <div class="card"  style="padding:30px; border-radius:1px;">
             <div class="card-body">
 
-      <!-- php block of code to display success, failure or error message starts here -->
+          
+              <!-- php block of code to display success, failure or error message starts here -->
       <?php if (!empty($successMessage)): ?>
     <div class="alert alert-dismissible" style="background-color: rgb(7, 102, 219); color:white; font-size:100%; text-align:center;
     font-family:Arial; margin-bottom:10px; z-index:5; border-radius:1px solid rgb(7, 102, 219); padding:9px; border-radius:2px;">
@@ -142,11 +152,11 @@ if($password==$confirmPassword){
 
               <!-- Multi Columns Form -->
               <form method="post" action="adminNewUser" class="row g-3">
-                <div class="col-md-6">
+                <div class="col-md-3">
                   <label for="svcNo" class="form-label">Svc No</label>
                   <input type="text" name="svcNo" class="form-control" id="svcNo" placeholder="Enter svc no" required>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-3">
                   <label for="rank" class="form-label">Rank</label>
                   <select id="rank" name="rank" class="form-select" required>
                     <option value="">Choose Rank...</option>
@@ -169,7 +179,7 @@ if($password==$confirmPassword){
                      <option value="ACW">ACW</option>
                   </select>
                 </div>
-                 <div class="col-md-12">
+                 <div class="col-md-3">
                   <label for="userRole" class="form-label">User Role</label>
                   <select id="userRole" name="userRole" class="form-select" required>
                     <option value="">Choose User Role...</option>
@@ -177,32 +187,27 @@ if($password==$confirmPassword){
                     <option value="EDITOR">Editor</option>
                   </select>
                 </div>
-                  <div class="col-md-6">
+                  <div class="col-md-3">
                   <label for="initials" class="form-label">Initials</label>
                   <input type="text" name="initials" class="form-control" id="initials" placeholder="Enter initials" required>
                 </div>
-                  <div class="col-md-6">
+                  <div class="col-md-3">
                   <label for="surname" class="form-label">Surname</label>
                   <input type="text" name="surname" class="form-control" id="surname" placeholder="Enter surname" required>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-3">
                   <label for="password" class="form-label">Password</label>
                   <input type="password" name="password" class="form-control" id="password" placeholder="Enter password" required>
                 </div>
                   <div class="col-md-6">
                   <label for="confirmPassword" class="form-label">Confirm Password</label>
-                  <input type="password" name="confirmPassword" class="form-control" id="confirmPassword" required>
+                  <input type="password" name="confirmPassword" class="form-control" id="confirmPassword" placeholder="Confirm password" required>
                 </div>
                 <div class="col-12">
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="gridCheck">
-                    <label class="form-check-label" for="gridCheck">
-                      Check me out
-                    </label>
-                  </div>
+                  <button type="submit" name="add" class="btn btn-primary" style="border-radius:2px; width:120px; height:50px">CREATE</button>
                 </div>
                 <div class="">
-                  <button type="submit" name="add" class="btn btn-primary" style="border-radius:2px; width:120px; height:50px">CREATE</button>
+                
                 </div>
               </form><!-- End Multi Columns Form -->
 

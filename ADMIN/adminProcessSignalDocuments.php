@@ -1,12 +1,8 @@
 <?php
+session_start();
 include('../connection.php');
 include('../functions.php');
-include 'adminHeader.php';
-include 'adminSideNavBar.php';
 
-$successMessage = '';
-$failureMessage = '';
-$errorMessage = '';
 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['archive_signal'])) {
@@ -96,24 +92,38 @@ $documentId =  uniqid();
     try{
             if ($conn->query($documentSQL) == TRUE) {
 
-                $successMessage = 'DOCUMENT ARCHIVED SUCCESSFULLY...';
+                $_SESSION["successMessageForSignal"] = '<div class="alert alert-dismissible" style="background-color: rgb(7, 102, 219); color:white; font-size:120%; text-align:center;
+                font-family:Arial; margin-bottom:10px; z-index:5; border-radius:1px solid rgb(7, 102, 219); padding:5px; border-radius:2px;">
+                <a href="adminArchive" class="close" data-dismiss="alert" aria-label="close" style="color:white; font-size:120%; text-align:left;
+                font-family:Arial; text-decoration:none; padding:0px">&times;</a>
+                SIGNAL DOCUMENT ARCHIVED SUCCESSFULLY......
+                </div>';
                  //declare or prepare variables for log_event function
                 $userSvcNo = $_SESSION['svcNo'];
                 $action = "archive";
-                $description = "$userSvcNo"." "."archived a signal document with ref->$ref, document date->$documentDate and subject->$subject";
+                $description = "$userSvcNo"." "."archived a signal document with ref->$ref, dtg->$dtg, control no->$controlNo, document date->$documentDate and subject->$subject";
                 $account = $_SESSION['account'];
                 //call the log_event function
                 log_event($conn, $userSvcNo, $action, $description, $account);
+                header("Location: adminArchive");
+                exit();
             }else{
 
-                $failureMessage = 'OOPS...! DOCUMENT ARCHIVE NOT SUCCESSFUL. TRY AGAIN';
+                $_SESSION["failureMessageForSignal"] = '<div class="alert alert-dismissible" style="background-color: rgb(7, 102, 219); color:white; font-size:120%; text-align:center;
+                font-family:Arial; margin-bottom:10px; z-index:5; border-radius:1px solid rgb(7, 102, 219); padding:5px; border-radius:2px;">
+                <a href="adminArchive" class="close" data-dismiss="alert" aria-label="close" style="color:white; font-size:120%; text-align:left;
+                font-family:Arial; text-decoration:none; padding:0px">&times;</a>
+                OOPS...! DOCUMENT ARCHIVE NOT SUCCESSFUL. TRY AGAIN
+                </div>';
                //declare or prepare variables for log_event function
                 $userSvcNo = $_SESSION['svcNo'];
                 $action = "failed attempt";
-                $description = "$userSvcNo"." "."tried to archive a signal document with ref->$ref, document date->$documentDate and subject->$subject";
+                $description = "$userSvcNo"." "."tried to archive a signal document with ref->$ref, dtg->$dtg, control no->$controlNo, document date->$documentDate and subject->$subject";
                 $account = $_SESSION['account'];
                 //call the log_event function
                 log_event($conn, $userSvcNo, $action, $description, $account);
+                header("Location: adminArchive");
+                exit();
             }
         }
     catch(Exception $e)
@@ -123,18 +133,34 @@ $documentId =  uniqid();
             }
 }else{
 
-                $errorMessage = 'OOPS...! Error: No file uploaded or an error occurred.';
+                $_SESSION["errorMessageForSignal"] = '<div class="alert alert-dismissible" style="background-color: rgb(7, 102, 219); color:white; font-size:120%; text-align:center;
+                font-family:Arial; margin-bottom:10px; z-index:5; border-radius:1px solid rgb(7, 102, 219); padding:5px; border-radius:2px;">
+                <a href="adminArchive" class="close" data-dismiss="alert" aria-label="close" style="color:white; font-size:120%; text-align:left;
+                font-family:Arial; text-decoration:none; padding:0px">&times;</a>
+                OOPS...! Error: No file uploaded or an error occurred.
+                </div>';
                //declare or prepare variables for log_event function
                 $userSvcNo = $_SESSION['svcNo'];
                 $action = "failed attempt";
-                $description = "$userSvcNo"." "."tried to archive a signal document with ref->$ref, document date->$documentDate and subject->$subject";
+                $description = "$userSvcNo"." "."tried to archive a signal document with ref->$ref, dtg->$dtg, control no->$controlNo, document date->$documentDate and subject->$subject";
                 $account = $_SESSION['account'];
                 //call the log_event function
                 log_event($conn, $userSvcNo, $action, $description, $account);
+                header("Location: adminArchive");
+                exit();
 }
 }
 ?>
-<main id="main" class="main">
+<main id="main" class="main"
+ style="
+    margin-top:-10px;
+    background-image: url('../IMAGES/img1.jpg'); 
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+    zIndex:-1;
+    "
+>
  <!--    <div class="pagetitle">
       <h1>ARCHIVE</h1>
       <nav>
@@ -145,48 +171,10 @@ $documentId =  uniqid();
       </nav>
     </div> -->
     <!-- End Page Title -->
-    <section class="section" id="newUserSection">
+    <section class="section" id="newUserSection" style="margin-top:70px;">
       <div class="row" style="padding-right:10px;">
-           <div class="card"  style="padding:50px; padding-bottom:50px; padding-top:50px;">
+           <div class="card"  style="padding-bottom:50px; padding-top:50px; border-radius:1px;">
             <div class="card-body">
-
-        
-
-      <!-- php block of code to display success, failure or error message starts here -->
-      <?php if (!empty($successMessage)): ?>
-    <div class="alert alert-dismissible" style="background-color: rgb(7, 102, 219); color:white; font-size:120%; text-align:center;
-    font-family:Arial; margin-bottom:10px; z-index:5; border-radius:1px solid rgb(7, 102, 219); padding:10px; border-radius:2px;">
-      <a href="adminArchive" class="close" data-dismiss="alert" aria-label="close" style="color:white; font-size:120%; text-align:left;
-      font-family:Arial; text-decoration:none; padding:0px">&times;</a>
-      <?php echo $successMessage; ?>
-    </div>
-  <?php endif; ?>
-
-  <?php if (!empty($failureMessage)): ?>
-    <div class="alert alert-dismissible" style="background-color: rgb(7, 102, 219); color:white; font-size:120%; text-align:center;
-    font-family:Arial; margin-bottom:10px; z-index:5; border-radius:1px solid rgb(7, 102, 219); padding:10px; border-radius:2px;">
-      <a href="adminArchive" class="close" data-dismiss="alert" aria-label="close" style="color:white; font-size:120%; text-align:left;
-      font-family:Arial; text-decoration:none; padding:0px">&times;</a>
-      <?php echo $failureMessage; ?>
-    </div>
-  <?php endif; ?>
-
-  <?php if (!empty($errorMessage)): ?>
-    <div class="alert alert-dismissible" style="background-color: rgb(7, 102, 219); color:white; font-size:120%; text-align:center;
-    font-family:Arial; margin-bottom:10px; z-index:5; border-radius:1px solid rgb(7, 102, 219); padding:10px; border-radius:2px;">
-      <a href="adminArchive" class="close" data-dismiss="alert" aria-label="close" style="color:white; font-size:120%; text-align:left;
-      font-family:Arial; text-decoration:none; padding:0px">&times;</a>
-      <?php echo $errorMessage; ?>
-    </div>
-  <?php endif; ?>
-   <!-- php block of code to display success, failure or error message ends -->
-
-<!-- <div  class="col-md-12">
-<a href="adminArchive" type="button" style="border-radius:1px; width:100%; background-color: rgb(7, 102, 219); color:white; font-size:100%; text-align:center;
-    font-family:Arial; margin-bottom:10px; z-index:5; border-radius:1px solid rgb(7, 102, 219); padding:9px; border-radius:2px;" class="btn btn-primary">CLICK TO GO BACK...</a>
-</div> -->
-              
-         
 
             </div>
           </div>
@@ -194,16 +182,7 @@ $documentId =  uniqid();
     </section>
 
   </main><!-- End #main -->
+  </body>
 <?php 
-include 'adminFooter.php'; 
-
-/*  //declare or prepare variables for log_event function
-$userSvcNo = $_SESSION['svcNo'];
-$action = "visit";
-$description = "$userSvcNo"." "."visited the adminUsers page";
-$account = $_SESSION['account'];
-
- //call the log_event function
-log_event($conn, $userSvcNo, $action, $description, $account); */
 
 ?>

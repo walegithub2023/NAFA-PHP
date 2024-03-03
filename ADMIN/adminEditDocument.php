@@ -82,7 +82,7 @@ try{
 
     } else {
 
-         header("Location: adminSignalSuccessMessage");
+         header("Location: adminSuccessMessage");
 
     }
     }catch(Exception $ex){
@@ -387,13 +387,21 @@ try{
 <?php include 'adminSideNavBar.php';?>
 
 
-<main id="main" class="main">
+<main id="main" class="main"
+ style="
+    background-image: url('../IMAGES/img1.jpg'); 
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+    zIndex:-1;
+    "
+>
     <div class="pagetitle">
-      <h1>EDIT SIGNAL</h1>
+      <h1>EDIT DOCUMENT</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="adminHome">Home</a></li>
-          <li class="breadcrumb-item active">Edit Signal Dc</li>
+          <li class="breadcrumb-item active">Edit Document</li>
         </ol>
       </nav>
     </div>
@@ -406,13 +414,13 @@ try{
       <div class="row">
         <div class="col-lg-12">
 
-          <div class="card" style="padding-top:40px; padding-bottom:20px;">
+          <div class="card" style="padding-top:40px; padding-bottom:20px; border-radius:1px;">
             <div class="card-body">
-             <h4 class="card-title" style="padding-left:70px;">EDIT SIGNAL FORM</h4>
+             <h4 class="card-title" style="padding-left:70px;">EDIT DOCUMENT FORM</h4>
 
              <!--  signal document form starts --> 
                     <!-- Multi Columns Form -->
-              <form method="post" action="adminEditSignal" enctype="multipart/form-data" class="row g-3" style="padding-left:70px; padding-right:70px; padding-top:20px; padding-bottom:20px;">
+              <form method="post" action="adminEditDocument" enctype="multipart/form-data" class="row g-3" style="padding-left:70px; padding-right:70px; padding-top:20px; padding-bottom:20px;">
                <div class="col-md-2">
                   <label for="documentType" class="form-label">TYPE:</label>
                   <select id="documentType" name="documentType" class="form-select" style="border-radius:2px;" required>
@@ -477,21 +485,21 @@ try{
                   <label for="filePath" class="form-label">UPLOAD:</label>
                    <input type="file" name="filePath" class="form-control" id="filePath" placeholder="choose" style="border-radius:2px;" required>
                 </div>
-                <div class="col-md-12">
+                <div class="col-md-5">
                   <label for="subject" class="form-label">SUBJECT</label>
                   <input type="text" value="<?php echo $row['SUBJECT'];?>" name="subject" class="form-control" id="subject" placeholder="Enter subject" style="border-radius:2px;" required>
                 </div>
-                <div class="col-md-12">
+                <div class="col-md-6">
                   <label for="body" class="form-label">BODY</label>
                   <input type="text" value="<?php echo $row['BODY'];?>" name="body" class="form-control" id="body" placeholder="Enter body" style="border-radius:2px;" required>
                 </div>
-                <div class="col-md-12">
+                 <div class="col-md-1" style="margin-top:47px;">
+                      <button type="submit" name="update" style="border-radius:1px;" class="btn btn-primary">UPDATE</button>
+                 </div>
+                  <div class="col-md-12">
                   <label for="documentId" class="form-label"></label>
                   <input type="hidden" value="<?php echo $row['DOCUMENT_ID'];?>" name="documentId" class="form-control" id="documentId" placeholder="" style="border-radius:2px;" required>
                 </div>
-                 <div class="col-md-12">
-                      <button type="submit" name="update" style="border-radius:1px;" class="btn btn-primary">UPDATE</button>
-                 </div>
                </form>
               <!-- End Multi Columns Form -->
 

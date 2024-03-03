@@ -1,9 +1,17 @@
 <?php include 'adminHeader.php'; ?>
 <?php include 'adminSideNavBar.php'; ?>
 
-<main id="main" class="main">
+<main id="main" class="main"
+   style="
+    background-image: url('../IMAGES/img1.jpg'); 
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+    zIndex:-1;
+    "
+>
       <div class="row" id="homeHeaderDiv">
-        <p id="homeHeader">NIGERIAN AIR FORCE DOCUMENT ARCHIVING SYSTEM</p>
+        <p id="" class="text-primary;" style="font-size:250%; color:rgb(1, 41, 112); text-align:center;">NIGERIAN AIR FORCE DOCUMENT ARCHIVING SYSTEM</p>
       </div>
       <div class="row" id="homeParagraphDiv">
        <p id="homeParagraphText">
