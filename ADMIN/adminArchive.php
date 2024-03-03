@@ -55,7 +55,7 @@ include 'adminSideNavBar.php';
             }
             //MESSAGES FROM adminProcessSignalDocuments END HERE
     ?>
-    
+
     <?php 
             //MESSAGES FROM adminProcessOtherDocuments START HERE
                // Check if a success message is set in the session for successful other documents archive
@@ -95,8 +95,8 @@ include 'adminSideNavBar.php';
             <div class="card-body">
               <h5 class="card-title">DOCUMENTS</h5>
               <p>
-                 Lorem ipsum dolor sit amet consectetur adipiscing elit, quam torquent cubilia vulputate mattis tempor, velit 
-                tristique proin taciti a et.
+                To archive a signal document, click the "SIGNAL DOCUMENTS" button.
+                Click the "OTHER DOCUMENTS" button to archive other documents.
               </p>
 
 

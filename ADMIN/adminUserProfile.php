@@ -58,6 +58,7 @@ $svcNo = $_SESSION['svcNo'];
               <img src="../IMAGES/passportIcon.png" alt="Profile" class="rounded-circle" style="padding:10px; border:1px solid #6c757d;">
              <h2><?php echo ($_SESSION['svcNo']);?></h2>
               <h3><?php echo ($_SESSION['initials']);?><?php echo" ";?><?php echo ($_SESSION['surname']);?></h3>
+               <h3><?php echo ($_SESSION['userRole']);?></h3>
             </div>
           </div>
 

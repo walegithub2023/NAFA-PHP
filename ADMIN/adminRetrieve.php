@@ -27,11 +27,23 @@ include 'adminSideNavBar.php';
 
 
 
+
     <!-- retrieve document form section starts -->
     <section class="section" id="retrieveFormSection" style="font-size:90%;">
       <div class="row">
            <div class="card"  style="padding:40px; border-radius:1px;">
             <div class="card-body">
+
+            <?php
+// Check if a success message is set in the session for successful document update 
+                    if (isset($_SESSION['successMessageForEditDocument'])) {
+                        // Display the success message
+                        echo '<div>' . $_SESSION['successMessageForEditDocument'] . '</div>';
+
+                        // Unset the success message for document update to prevent it from being displayed again on page reload
+                        unset($_SESSION['successMessageForEditDocument']);
+            }
+?>
 
              <h4 class="">RETRIEVE FORM</h4>
 
