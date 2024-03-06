@@ -60,21 +60,64 @@ include 'adminSideNavBar.php';
             {
             ?>
                 <tr id='userRow' style='text-transform: uppercase; font-size:90%;'>
-                 <td><?php echo $auditFetch['SVC_NO']?></td>
-                <td><?php echo $auditFetch['ACTION']?></td>
-                <td><?php echo $auditFetch['DESCRIPTION']?></td>
-                <td><?php echo $auditFetch['ACCOUNT']?></td>
-                <td><?php echo $auditFetch['DATE_TIME']?></td>
-                <td><a style="color:black;" href='adminDeleteAuditTrail?auditId=<?php echo $auditFetch['AUDIT_ID'];?>' type='submit' onClick='javascript:return confirm("\nARE YOU SURE YOU WANT TO DELETE THIS AUDIT RECORD??? DELETING THIS RECORD REMOVES IT FROM THE DATABASE. CLICK OK TO DELETE AND CANCEL TO CANCEL .....\n");'><i class='bi bi-trash' id='deleteButton'></i></a></td></tr>
+                    <td><?php echo $auditFetch['SVC_NO']?></td>
+                    <td><?php echo $auditFetch['ACTION']?></td>
+                    <td><?php echo $auditFetch['DESCRIPTION']?></td>
+                    <td><?php echo $auditFetch['ACCOUNT']?></td>
+                    <td><?php echo $auditFetch['DATE_TIME']?></td>
+                    <td>
+                      <!-- Basic Modal -->
+                        <a style="color:grey; margin-left:5px; font-size:;" type="button" data-bs-toggle="modal" data-bs-target="#basicModal"><i class='bi bi-trash' id='deleteButton'></i>
+                    
+                        <div class="modal fade" id="basicModal" tabindex="-1" style="font-size:100%;">
+                          <div class="modal-dialog">
+                            <div class="modal-content" style="border-radius:1px; text-align:justify; padding-left:10px; padding-right:10px;">
+                              <div class="modal-header">
+                                <h5 class="modal-title">ADMIN DELETE THIS AUDIT RECORD</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                              </div>
+                              <div class="modal-body">
+                                Are you sure you want to delete this audit record??? Deleting this record removes it from the database.
+                                Click "CANCEL" to cancel this action, and "DELETE" to delete.
+                              </div>
+                              <div class="modal-footer">
+                                <a type="button" style="border-radius:1px;" class="btn btn-secondary" data-bs-dismiss="modal">CANCEL</a>
+                                <a type="button" href="adminDeleteAuditTrail?auditId=<?php echo $auditFetch['AUDIT_ID'];?>" name="delete" style="border-radius:1px;" class="btn btn-primary">DELETE</a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+              <!-- End Basic Modal-->
+                    </td>
+                </tr>
             <?php
             }
             ?>
                 </tbody>
               </table>
         </div>
-              <!-- End Table with stripped rows -->
-                <a style="color:grey; margin-top:30px; margin-bottom:20px; margin-left:5px; font-size:300%;" href='adminDeleteAllAuditTrail' type="submit" onClick='javascript:return confirm("\nARE YOU SURE YOU WANT TO DELETE ALL AUDIT RECORDS??? DELETING THESE RECORDS REMOVES ALL AUDIT RECORDS FROM THE DATABASE. CLICK OK TO DELETE AND CANCEL TO CANCEL .....\n");'><i class='bi bi-trash' id='deleteButton'></i>
-            
+            <!-- Basic Modal -->
+              <a style="color:grey; margin-top:30px; margin-bottom:20px; margin-left:5px; font-size:300%;" type="button" data-bs-toggle="modal" data-bs-target="#basicModal2"><i class='bi bi-trash' id='deleteButton'></i>
+          
+              <div class="modal fade" id="basicModal2" tabindex="-1" style="font-size:30%;">
+                <div class="modal-dialog">
+                  <div class="modal-content" style="border-radius:1px; text-align:justify; padding-left:10px; padding-right:10px;">
+                    <div class="modal-header">
+                      <h5 class="modal-title">ADMIN DELETE ALL AUDIT TRAIL</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                       Are you sure you want to delete all audit trail records? By deleting removes all audit trail records from the database.
+                       Click "CANCEL" to cancel this action, and "DELETE" to delete all records from admin's audit trail.
+                    </div>
+                    <div class="modal-footer">
+                      <a type="button" style="border-radius:1px;" class="btn btn-secondary" data-bs-dismiss="modal">CANCEL</a>
+                      <a type="button" href="adminDeleteAllAuditTrail" name="delete" style="border-radius:1px;" class="btn btn-primary">DELETE</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- End Basic Modal-->
         </div>
 
         </div>

@@ -28,7 +28,7 @@ include 'adminSideNavBar.php';
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="adminHome">Home</a></li>
-          <li class="breadcrumb-item">Tables</li>
+          <li class="breadcrumb-item">Data</li>
           <li class="breadcrumb-item active">Users</li>
         </ol>
       </nav>
@@ -75,7 +75,7 @@ include 'adminSideNavBar.php';
             
               <!-- Table with stripped rows -->
             <div class="table-responsive" style="boder">
-              <table class="table datatable table-striped second table-hover" style="text-transform:uppercase; font-size:90%;">
+              <table class="table datatable table-striped second table-hover" style="font-size:90%;">
                 <thead>
                   <tr>
                    
@@ -106,7 +106,8 @@ include 'adminSideNavBar.php';
                 <td><?php echo $userFetch['ACCOUNT']?></td>
                 <td><a style="color:black" href='adminViewUser?svcNo=<?php echo $userFetch['SVC_NO'];?>' type='submit' id='viewButton'><i class='bi bi-eye' id='viewButton'></i></a></td>
                 <td><a style="color:black" href='adminEditUser?svcNo=<?php echo $userFetch['SVC_NO'];?>' type='submit'><i class='bi bi-pencil' id='editButton'></i></a></td>
-                <td><a style="color:black" href='adminDeleteUser?svcNo=<?php echo $userFetch['SVC_NO'];?>' type='submit' onClick='javascript:return confirm("\nARE YOU SURE YOU WANT TO DELETE THIS USER??? DELETING THIS USER REMOVES THE USER FROM THE DATA BASE. CLICK OK TO DELETE AND CANCEL TO CANCEL .....\n");'><i class='bi bi-trash' id='deleteButton'></i></a></td></tr>
+                <td>
+                  <a style="color:black" href='adminDeleteUser?svcNo=<?php echo $userFetch['SVC_NO'];?>' type='submit' onClick='javascript:return confirm("\nARE YOU SURE YOU WANT TO DELETE THIS USER??? DELETING THIS USER REMOVES THE USER FROM THE DATA BASE. CLICK OK TO DELETE AND CANCEL TO CANCEL .....\n");'><i class='bi bi-trash' id='deleteButton'></i></a></td></tr>
             <?php
          
             }

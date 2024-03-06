@@ -48,7 +48,7 @@
               <div class="info-box card" style="border-radius:1px;">
                 <i class="bi bi-envelope"></i>
                 <h3>Email Us</h3>
-                <p>dit@airforce.mil.ng<br>dosaf@airforce.mil.ng</p>
+                <p>dit@airforce.mil.ng<br>cis@airforce.mil.ng</p>
               </div>
             </div>
             <div class="col-lg-6">
@@ -64,7 +64,7 @@
 
         <div class="col-xl-6">
           <div class="card p-4" style="border-radius:1px;">
-            <form action="" method="post" class="php-email-form">
+            <form action="" method="post" class="php-email-form" style="padding-bottom:20px;">
               <div class="row gy-4">
 
                 <div class="col-md-6">
@@ -87,7 +87,7 @@
                   <div class="loading">Loading</div>
                   <div class="sent-message">Your message has been sent. Thank you!</div>
 
-                  <button type="submit">Send Message</button>
+                  <button type="submit" style="border-radius:3px;">Send Message</button>
                 </div>
 
               </div>

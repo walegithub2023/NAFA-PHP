@@ -171,8 +171,9 @@ include 'adminSideNavBar.php';
                     <th scope="col">TYPE</th>
                     <th scope="col">REF</th>
                     <th scope="col">SUBJECT</th>
-                    <th scope="col">DOCUMENT DATE</th>
-                    <th scope="col">DATE ARCHIVED</th>
+                    <th scope="col">BODY</th>
+                    <th scope="col">DOC.DATE</th>
+                    <th scope="col">DATE.ACHVD</th>
                     <th scope="col">TIME</th>
                     <th scope="col">VIEW</th>
                      <th scope="col">OPEN</th>
@@ -251,7 +252,7 @@ include 'adminSideNavBar.php';
             //call the log_event function
           log_event($conn, $userSvcNo, $action, $description, $account);
           //display the retrieved documents.
-          echo'<div class="alert alert-dismissible" style="background-color: rgb(7, 102, 219); color:white; font-size:100%; text-align:center;
+          $successMsg='<div class="alert alert-dismissible" style="background-color: rgb(7, 102, 219); color:white; font-size:100%; text-align:center;
           font-family:Arial; margin-bottom:10px; z-index:5; border-radius:1px solid rgb(7, 102, 219); padding:9px; border-radius:2px;">
           <a href="adminRetrieve" class="close" data-dismiss="alert" aria-label="close" style="color:white; font-size:120%; text-align:left;
           font-family:Arial; text-decoration:none; padding:0px">&times;</a>
@@ -686,13 +687,39 @@ include 'adminSideNavBar.php';
             <td>".$documentFetch['DOCUMENT_TYPE']."</td>
             <td>".$documentFetch['REF']."</td>
             <td>".$documentFetch['SUBJECT']."</td>
+            <td>".$documentFetch['BODY']."</td>
             <td>".$documentFetch['DOCUMENT_DATE']."</td>
             <td>".$documentFetch['DATE_ARCHIVED']."</td>
              <td>".$documentFetch['TIME']."</td>
             <td><a style='color:black' href='adminViewDocument?documentId=".$documentFetch['DOCUMENT_ID']."' type='submit' id='viewButton'><i class='bi bi-eye' id='viewButton'></i></a></td>
              <td><a style='color:black' href='".$documentFetch['FILE_PATH']."' target='_blank' type='submit' id='openButton'><i class='bi bi-file-earmark-pdf' id='openButton'></i></a></td>
             <td><a style='color:black' href='adminEditDocument?documentId=".$documentFetch['DOCUMENT_ID']."' type='submit'><i class='bi bi-pencil' id='editButton'></i></a></td>
-            <td><a style='color:black' href='adminDeleteDocument?documentId=".$documentFetch['DOCUMENT_ID']."' type='submit' onClick='javascript:return confirm(\"ARE YOU SURE YOU WANT TO DELETE THIS DOCUMENT??? DELETING THIS DOCUMENT REMOVES IT FROM THE DATABASE. CLICK OK TO DELETE AND CANCEL TO CANCEL .....\");'><i class='bi bi-trash' id='deleteButton'></i></a></td>
+            <td> 
+            <!-- Basic Modal -->
+                        <a style='color:black; margin-left:5px; font-size:;' type='button' data-bs-toggle='modal' data-bs-target='#basicModal'><i class='bi bi-trash' id='deleteButton'></i>
+                    
+                        <div class='modal fade' id='basicModal' tabindex='-1' style='font-size:100%;'>
+                          <div class='modal-dialog'>
+                            <div class='modal-content' style='border-radius:1px; text-align:justify; padding-left:10px; padding-right:10px;'>
+                              <div class='modal-header'>
+                                <h5 class='modal-title'>ADMIN DELETE THIS DOCUMENT</h5>
+                                <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
+                              </div>
+                              <div class='modal-body'>
+                                Are you sure you want to delete this document??? Deleting this document removes it from the database.
+                                Click 'CANCEL' to cancel this action, and 'DELETE' to delete.
+                              </div>
+                              <div class='modal-footer'>
+                                <a type='button' style='border-radius:1px;' class='btn btn-secondary' data-bs-dismiss='modal'>CANCEL</a>
+                                <a type='button' href='adminDeleteDocument?documentId=".$documentFetch['DOCUMENT_ID']."' name='delete' style='border-radius:1px;' class='btn btn-primary'>DELETE</a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+              <!-- End Basic Modal-->
+            
+            
+            </td>
         </tr>";
 }
 

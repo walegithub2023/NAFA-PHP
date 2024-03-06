@@ -114,7 +114,7 @@ if($password==$confirmPassword){
     </div><!-- End Page Title -->
 
     <section class="section" id="newUserSection">
-      <div class="row" style="width:99%;">
+      <div class="row">
            <div class="card"  style="padding:30px; border-radius:1px;">
             <div class="card-body">
 

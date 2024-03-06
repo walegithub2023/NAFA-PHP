@@ -53,13 +53,20 @@
       
         <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#personnel-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-people"></i><span>Personnel</span><i class="bi bi-chevron-down ms-auto"></i>
+          <i class="bi bi-people"></i><span>Nominal</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="personnel-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
-            <a href="adminAllPers">
-              <i class="bi bi-people"></i><span>All Pers</span>
+            <a href="adminNominal">
+              <i class="bi bi-people"></i><span>Nominal</span>
             </a>
+          </li>
+           <li>
+            <a href="adminPdeState">
+              <i class="bi bi-circle"></i><span>Pde State</span>
+            </a>
+          </li>
+           <li>
           </li>
           <li>
             <a href="adminNewPers">
@@ -107,14 +114,14 @@
               <i class="bi bi-circle"></i><span>Branches</span>
             </a>
           </li>
-          <li>
-            <a href="adminDirectorates">
-              <i class="bi bi-circle"></i><span>Directorates</span>
-            </a>
-          </li>
            <li>
             <a href="adminNewBranch">
               <i class="bi bi-circle"></i><span>New Branch</span>
+            </a>
+          </li>
+          <li>
+            <a href="adminDirectorates">
+              <i class="bi bi-circle"></i><span>Directorates</span>
             </a>
           </li>
            <li>
