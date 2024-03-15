@@ -47,7 +47,7 @@ if(isset($_POST['login'])) {
                 exit();
             }
         } else {
-            $error_message = 'Oops! Sorry, Your svc number or Password is Invalid. Please Try Again.';
+            echo'Oops! Sorry, Your svc number or Password is Invalid. Please Try Again.';
         }
     }
 }

@@ -1,5 +1,12 @@
+
 <?php 
-session_start();
+// Start the session only if it's not already started
+if(session_status() !== PHP_SESSION_ACTIVE) {
+    session_start();
+}
+
+// Check if user is not logged in, redirect to login page if they are not
+if(isset($_SESSION['svcNo']) && isset($_SESSION['password']) && $_SESSION['account']=='ADMIN') {
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -281,3 +288,10 @@ session_start();
     </nav><!-- End Icons Navigation -->
 
   </header><!-- End Header -->
+
+   <?php 
+}else{
+    header("Location: ../login");
+    exit();
+}
+  ?>

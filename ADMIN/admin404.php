@@ -1,4 +1,11 @@
 
+<?php
+session_start();
+
+// Check if user is not logged in, redirect to login page if they are not
+if(isset($_SESSION['svcNo']) && isset($_SESSION['password']) && $_SESSION['account']=='ADMIN') {
+
+?>
 <?php include 'adminHeader.php'; ?>
 <?php include 'adminSideNavBar.php'; ?>
 
@@ -20,3 +27,9 @@
 
   </main><!-- End #main -->
   <?php include 'adminFooter.php'; ?>
+  <?php 
+}else{
+    header("Location: login");
+    exit();
+}
+  ?>

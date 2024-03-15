@@ -1,5 +1,10 @@
 <?php
 session_start();
+
+// Check if user is not logged in, redirect to login page if they are not
+if(isset($_SESSION['svcNo']) && isset($_SESSION['password']) && $_SESSION['account']=='ADMIN') {
+?>
+<?php
 include('../connection.php');
 include('../functions.php');
 
@@ -111,3 +116,9 @@ $remark = $_POST['remark'];
             }
 }
 ?>
+<?php 
+}else{
+    header("Location: ../login");
+    exit();
+}
+  ?>

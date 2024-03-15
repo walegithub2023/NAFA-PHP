@@ -1,5 +1,10 @@
 <?php
 session_start();
+
+// Check if user is not logged in, redirect to login page if they are not
+if(isset($_SESSION['svcNo']) && isset($_SESSION['password']) && $_SESSION['account']=='ADMIN') {
+?>
+<?php
 include('Connection.php');
 include('functions.php');
 
@@ -19,3 +24,9 @@ session_destroy();
 //redirect user to login page 
 header("Location: login");
 ?>
+<?php 
+}else{
+    header("Location: login");
+    exit();
+}
+  ?>
